@@ -51,7 +51,7 @@ class File {
 		if (!is_dir($dir) || !is_writable($dir)) return false;
 		
 		// Make sure the destination ends in a slash
-		$dir = self::addTrailingSlash($dir);
+		$dir = self::add_trailing_slash($dir);
 		
 		// Loop through the depth, making directories
 		for ($i=0; $i<$depth; $i++) {
@@ -76,7 +76,7 @@ class File {
 	static public function organize_uploaded_file($src, $dst_dir) {
 		
 		// Make sure the destination ends in a slash
-		$dst_dir = self::addTrailingSlash($dst_dir);
+		$dst_dir = self::add_trailing_slash($dst_dir);
 		
 		// If $src is a FILES array, get the tmp and real filenames out
 		if (is_array($src)) {
@@ -109,9 +109,25 @@ class File {
 	 * @param string $dir The path to a directory
 	 * @return string The slash added to the name
 	 */
-	static public function addTrailingSlash($dir) {
+	static public function add_trailing_slash($dir) {
 		if (substr($dir, -1, 1) != '/') $dir .= '/';
 		return $dir;
+	}
+	
+	/**
+	 * Remove the document root from a path.  Like to get the embed path to an
+	 * image given it's `realpath`.  I prefer to save this in the database rather than
+	 * the absolute path because it makes migrating data between enviornments easier.
+	 * @param string $path The absolute path in the filesystem
+	 * @return string The converted, web friendly relative path
+	 */
+	static public function public_path($path) {
+		
+		// If document root isn't in the path, this probably isn't an absolute path
+		if (strpos($path, $_SERVER['DOCUMENT_ROOT']) === false) return $path;
+		
+		// Remove the document root from the string
+		return str_replace($_SERVER['DOCUMENT_ROOT'], '', $path);
 	}
 	
 }
