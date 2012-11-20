@@ -1,4 +1,4 @@
-<?
+<?php
 
 // Add all classes to the Laravel autoloader
 Autoloader::namespaces(array(

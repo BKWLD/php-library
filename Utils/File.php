@@ -1,4 +1,4 @@
-<?
+<?php
 namespace BKWLD\Utils;
 
 // Utilities for dealing with files
