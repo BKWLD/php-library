@@ -123,6 +123,9 @@ class File {
 	 */
 	static public function public_path($path) {
 		
+		// Require a DOCUMENT_ROOT.  It could be missing when executed from the command line
+		if (empty($_SERVER['DOCUMENT_ROOT'])) throw new \Exception('DOCUMENT_ROOT not defined');
+		
 		// If document root isn't in the path, this probably isn't an absolute path
 		if (strpos($path, $_SERVER['DOCUMENT_ROOT']) === false) return $path;
 		
