@@ -31,7 +31,8 @@ class File {
 			$i++;
 		}
 		
-		// Return the new path
+		// Move the file and return the new path
+		move_uploaded_file($src, $dst);
 		return $dst;
 		
 	}
