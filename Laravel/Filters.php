@@ -4,6 +4,7 @@
 use \Laravel\Response;
 use \Laravel\Request;
 use \Laravel\Input;
+use \Laravel\Session;
 
 class Filters {
 	
