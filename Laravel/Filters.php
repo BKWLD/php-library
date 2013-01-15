@@ -5,6 +5,7 @@ use \Laravel\Response;
 use \Laravel\Request;
 use \Laravel\Input;
 use \Laravel\Session;
+use \Laravel\Log;
 
 class Filters {
 	
@@ -18,7 +19,7 @@ class Filters {
 	 *		return $result;
 	 *	}
 	 * });
-	 * 
+	 *
 	 */
 	static public function csrf() {
 		
