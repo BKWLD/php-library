@@ -13,4 +13,14 @@ class Collection {
 		return $ar[array_rand($ar)];
 	}
 	
+	/**
+	 * Replace all the empty strings in an array with NULL
+	 */
+	static public function null_empties($ar) {
+		foreach($ar as &$val) {
+			if (empty($val)) $val = null;
+		}
+		return $ar;
+	}
+	
 }
