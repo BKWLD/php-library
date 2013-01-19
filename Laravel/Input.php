@@ -10,7 +10,7 @@ class Input {
 	 */
 	public static function json_or_input() {
 		$json = \Laravel\Input::json(); // Had to save to var to test for empty
-		return Request::ajax() && !empty($json) ? (array) $json : \Laravel\Input::get();
+		return Request::ajax() && !empty($json) ? (array) $json : \Laravel\Input::all();
 	}
 	
 }
