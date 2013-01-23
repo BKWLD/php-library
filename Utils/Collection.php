@@ -1,5 +1,4 @@
-<?php
-namespace BKWLD\Utils;
+<?php namespace BKWLD\Utils;
 
 // Utilities for dealing with arrays and other collections
 class Collection {
