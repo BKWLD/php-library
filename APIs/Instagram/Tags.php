@@ -23,7 +23,7 @@ class Tags {
 		
 		// Form the starting URL
 		$url = 'https://api.instagram.com/v1/tags/'
-			.$tag
+			.urlencode($tag)
 			.'/media/recent?client_id='
 			.Config::get('instagram.client_id')
 			.'&min_tag_id='
