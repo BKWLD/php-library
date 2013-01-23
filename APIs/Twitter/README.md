@@ -1,0 +1,1 @@
+I pulled twitteroauth from this fork: https://github.com/jkbockstael/twitteroauth.  There didn't appear to be any great libraries for Twitter and PHP.  This was my runner up: https://github.com/themattharris/tmhOAuth.  I wnt with twitteroauth cause it was the most popular.

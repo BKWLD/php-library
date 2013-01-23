@@ -6,3 +6,4 @@ This is a bundle designed to work with Laravel.  It contains shared utility func
 
 * Utils - General framework independent utilities
 * Laravel - Reusable components designed to work with Laravel
+* APIs - Reusable components for working with 3rd party APIs like Twitter
