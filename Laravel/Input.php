@@ -13,4 +13,13 @@ class Input {
 		return Request::ajax() && !empty($json) ? (array) $json : \Laravel\Input::all();
 	}
 	
+	/**
+	 * Merge the JSON input into the regular input
+	 */
+	public static function json_and_input() {
+		$json = \Laravel\Input::json();
+		if (Request::ajax() && !empty($json)) return array_merge(\Laravel\Input::all(), (array) $json);
+		else return \Laravel\Input::all();
+	}
+	
 }
