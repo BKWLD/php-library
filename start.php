@@ -5,6 +5,11 @@ Autoloader::namespaces(array(
     'BKWLD' => Bundle::path('bkwld'),
 ));
 
+// Add specific dependencies to the Autoloader
+Autoloader::map(array(
+	'TwitterOAuth' => Bundle::path('bkwld').'/APIs/Twitter/twitteroauth/twitteroauth/twitteroauth.php'
+));
+
 // Load simple, non-class based Laravel utilitis
 require_once(Bundle::path('bkwld').'Laravel/helpers.php');
 require_once(Bundle::path('bkwld').'Laravel/validators.php');
