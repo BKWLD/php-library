@@ -22,4 +22,12 @@ class Collection {
 		return $ar;
 	}
 	
+	/**
+	 * Check if the key is either in an array (it is the value of 
+	 * a numeric key) or if it itself a key
+	 */
+	static public function key_or_val_exists($key, $ar) {
+		return array_key_exists($key, $ar) || in_array($key, $ar);
+	}
+	
 }
