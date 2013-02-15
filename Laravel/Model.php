@@ -10,4 +10,13 @@ class Model {
 		return array_map(function($m) { return $m->to_array(); }, $query);
 	}
 	
+	/**
+	 * Convert a collection of models to an array of just their ids
+	 */
+	static public function ids($collection) {
+		return array_map(function($model) {
+			return $model->id;
+		}, $collection);
+	}
+	
 }
