@@ -19,4 +19,12 @@ class Model {
 		}, $collection);
 	}
 	
+	/**
+	 * Manual pagiantion.  This is useful when the built in pagination can't be
+	 * used, which is the case when your query has a group by
+	 */
+	static public function paginate($query, $per_page) {
+		return $query->take($per_page)->skip((\Laravel\Input::get('page', 1)-1)*$per_page);
+	}
+	
 }
