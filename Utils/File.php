@@ -133,4 +133,41 @@ class File {
 		return str_replace($_SERVER['DOCUMENT_ROOT'], '', $path);
 	}
 	
+	/**
+	 * Set the appropriate headers to trigger a file download.  I took this from:
+	 * http://davidwalsh.name/php-force-download
+	 * @param string $path The absolute path to the file
+	 */
+	static public function download($path) {
+		
+		// Required for IE
+		if(ini_get('zlib.output_compression')) { ini_set('zlib.output_compression', 'Off');  }
+
+		// Get the file mime type using the file extension
+		switch(strtolower(substr(strrchr($path, '.'), 1))) {
+			case 'pdf': $mime = 'application/pdf'; break;
+			case 'zip': $mime = 'application/zip'; break;
+			case 'jpeg':
+			case 'jpg': $mime = 'image/jpg'; break;
+			case 'gif': $mime = 'image/gif'; break;
+			case 'png': $mime = 'image/png'; break;
+			default: $mime = 'application/force-download';
+		}
+		
+		// Set headers and output it
+		header('Pragma: public');   // required
+		header('Expires: 0');    // no cache
+		header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
+		header('Last-Modified: '.gmdate ('D, d M Y H:i:s', filemtime ($path)).' GMT');
+		header('Cache-Control: private',false);
+		header('Content-Type: '.$mime);
+		header('Content-Disposition: attachment; filename="'.basename($path).'"');
+		header('Content-Transfer-Encoding: binary');
+		header('Content-Length: '.filesize($path));  // provide file size
+		header('Connection: close');
+		readfile($path);    // push it out
+		exit();
+		
+	}
+	
 }
