@@ -22,4 +22,14 @@ class Input {
 		else return \Laravel\Input::get();
 	}
 	
+	/**
+	 * Remove a value from Laravel's Input
+	 */
+	public static function remove($key) {
+		$input = \Laravel\Input::get();
+		unset($input[$key]);
+		\Laravel\Input::replace($input);
+		return $input;
+	}
+	
 }
