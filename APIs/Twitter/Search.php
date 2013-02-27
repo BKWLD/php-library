@@ -3,9 +3,6 @@
 // Dependencies
 use \Laravel\Cache;
 use \Laravel\Log;
-use \Laravel\Config;
-require_once 'twitteroauth/twitteroauth/twitteroauth.php';
-use \TwitterOAuth;
 use \Exception;
 
 class Search {
@@ -24,12 +21,7 @@ class Search {
 		$since_id = Cache::get(self::CACHE_ID.$keyword, 0);
 		
 		// Setup connection
-		self::$connection = new TwitterOAuth(
-			Config::get('twitter.consumer_key'), 
-			Config::get('twitter.consumer_secret'),
-			Config::get('twitter.access_token'),
-			Config::get('twitter.access_token_secret')
-		);
+		self::$connection = Connect::OAuth();
 		
 		// Run query and garbage collect
 		$params = http_build_query(array(
