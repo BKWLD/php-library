@@ -12,7 +12,7 @@ Autoloader::map(array(
 
 // Load simple, non-class based Laravel utilitis
 require_once(Bundle::path('bkwld').'Laravel/helpers.php');
-require_once(Bundle::path('bkwld').'Laravel/validators.php');
+require_once(Bundle::path('bkwld').'Laravel/Validator.php');
 
 // Make the constants class easier to use
 class_alias('\BKWLD\Utils\Constants', 'Constants');
