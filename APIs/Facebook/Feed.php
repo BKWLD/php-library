@@ -24,7 +24,7 @@ class Feed {
 		
 		// Return cached response if exists
 		$cache_id = self::CACHE_ID.$id;
-		if (Cache::has($cache_id)) return Cache::get($cache_id);
+		if ($cached = Cache::get($cache_id)) return $cached;
 		
 		// Default options
 		$defaults = array(
