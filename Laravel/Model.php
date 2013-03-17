@@ -31,9 +31,12 @@ class Model {
 	 * Get the total count in a group_by friendly way.  count() can't be use because 
 	 * of how group by's affect it. And only() can't be used to get the value because it
 	 * can modify the $query object, restricting the columns that would get returned
+	 * @param $query - An Eloquent query instance
+	 * @param $table - The table you are counting
 	 */
-	static public function count($query) {
-		return $query->select(array(\Laravel\Database::raw('COUNT(DISTINCT projects.id) AS total')))->first()->total;
+	static public function count($query, $table = null) {
+		$column = $table ? $table.'.id' : 'id';
+		return $query->select(array(\Laravel\Database::raw('COUNT(DISTINCT '.$column.') AS total')))->first()->total;
 	}
 	
 }
