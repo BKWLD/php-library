@@ -27,4 +27,13 @@ class Model {
 		return $query->take($per_page)->skip((\Laravel\Input::get('page', 1)-1)*$per_page);
 	}
 	
+	/**
+	 * Get the total count in a group_by friendly way.  count() can't be use because 
+	 * of how group by's affect it. And only() can't be used to get the value because it
+	 * can modify the $query object, restricting the columns that would get returned
+	 */
+	static public function count($query) {
+		return $query->select(array(\Laravel\Database::raw('COUNT(DISTINCT projects.id) AS total')))->first()->total;
+	}
+	
 }
