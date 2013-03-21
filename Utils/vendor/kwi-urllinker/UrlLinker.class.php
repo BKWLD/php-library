@@ -63,7 +63,7 @@ class UrlLinker
      *  Transforms plain text into valid HTML, escaping special characters and
      *  turning URLs into links.
      */
-    public function parse($text)
+    public function parse($text, $options = array())
     {
         $html = '';
 
@@ -137,7 +137,10 @@ class UrlLinker
                     $linkText = "$domain$port$path";
                 }
 
-                $linkHtml = '<a href="' . htmlspecialchars($completeUrl) . '">'
+                    
+                $target = empty($options['target']) ? null : " target='{$options['target']}' ";
+
+                $linkHtml = '<a href="' . htmlspecialchars($completeUrl) . '" '.$target.'>'
                     . htmlspecialchars($linkText)
                     . '</a>';
 

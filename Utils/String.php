@@ -29,9 +29,19 @@ class String {
 	 * file into this function because it registers global functions
 	 * that I don't want in the global space
 	 */
-	static public function linkify($text) {
+	static public function linkify($text, $options = array()) {
+		
+		// Default options
+		$defaults = array(
+			'target' => '_blank',
+		);
+		
+		// Apply user options
+		if (is_array($options)) $options = array_merge($defaults, $options);
+		
+		// Generate the link
 		$url_linker = new UrlLinker;
-		return $url_linker->parse($text);
+		return $url_linker->parse($text, $options);
 	}
 	
 }
