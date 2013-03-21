@@ -3,6 +3,9 @@
 // Dependencies
 use \Laravel\Input;
 use \Laravel\Lang;
+use \Laravel\Messages;
+use \Laravel\Redirect;
+use \Laravel\URL;
 use \Exception;
 use \Laravel\Database as DB;
 
@@ -20,7 +23,7 @@ use \Laravel\Database as DB;
  * 
  * Example:
  * array(
- * 	slug => 'unique_intersect:tags,type;category,slug,10'
+ * 	'slug' => 'unique_intersect:tags,type;category,slug,10'
  * )
  * 
  */
@@ -52,11 +55,64 @@ use \Laravel\Database as DB;
 		return $query->count() == 0;
 });
 
-// Return messages for all validators by executing `BKWLD\Laravel\Validator::messages()`
+/**
+ * Validating logic that doesn't make sense as a registered Laravel validator
+ */
 class Validator {
+	
+	/**
+	 * Return messages for all validators by executing `BKWLD\Laravel\Validator::messages()`
+	 */
 	static public function messages() {
 		return array(
 			'unique_with' => Lang::line('validation.unique')->get(),
+			'required_unless' => '',
 		);
+	}
+	
+	/**
+	 * To succeed, all but one of the referenced fields must be empty.  In other words, one and only one field must
+	 * have a value.
+	 * @param $fields An array containing the field names to check
+	 * @param $input An associateive array of ht einput to check
+	 * 
+	 * Example: (this would be put in a Decoy model)
+	 * public function on_validating($input) {
+	 *	if ($response = BKWLD\Laravel\Validator::require_just_one(array('image', 'vimeo_url'), $input)) return $response;
+	 *	parent::on_validating($input);
+	 * }
+	 * 
+	 */
+	static public function require_just_one($fields, $input = null) {
+		
+		// Input is optional
+		if (empty($input)) $input == Input::get();
+		
+		// You must specify additional columns
+		if (count($fields) <= 1) throw new Exception('Multiple fields must be specified');
+		
+		// Check for each parameter in the input
+		$found = 0;
+		foreach($fields as $field) {
+			
+			// Test if a file
+			if (!empty($input[$field]['tmp_name'])) $found++;
+			
+			// Test if a normal field
+			if (!empty($input[$field]) && !isset($input[$field]['tmp_name'])) $found++;
+		}
+		
+		// If only one field has data, we're good.  Return false to indicate there is no error
+		if ($found === 1) return false;
+
+		// Otherwise, return a redirect response with the error
+		$titles = array_map('\BKWLD\Utils\String::title_from_key', $fields);
+		$message = 'You must specify <strong>exactly one</strong> of the following fields: '.implode(', ', $titles);
+		$errors = new Messages();
+		foreach($fields as $field) { $errors->add($field, $message); }
+		return Redirect::to(URL::current())
+			->with_errors($errors)
+			->with_input();
+		
 	}
 }
