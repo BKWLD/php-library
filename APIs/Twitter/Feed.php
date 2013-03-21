@@ -12,7 +12,7 @@ class Feed {
 
 	// Settings
 	const CACHE_ID = 'twitter-feed';
-	public static $cache_seconds = 600; // 10 min
+	public static $cache_minutes = 10;
 
 	/**
 	 * Get the most recent tweets by a user and cache the results
@@ -46,12 +46,12 @@ class Feed {
 		$request = 'statuses/user_timeline?'.$params;
 		$response = $connection->get('statuses/user_timeline.json?'.$params);
 		if (!empty($response->errors)) {
-			Cache::put($cache_id, array(), self::$cache_seconds);
+			Cache::put($cache_id, array(), self::$cache_minutes);
 			throw new Exception('Twitter error: '.$response->errors[0]->message);
 		}
 		
 		// Cache the response
-		Cache::put($cache_id, $response, self::$cache_seconds);
+		Cache::put($cache_id, $response, self::$cache_minutes);
 		
 		// Return the response
 		return $response;

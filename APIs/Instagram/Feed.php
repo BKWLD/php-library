@@ -13,7 +13,7 @@ class Feed {
 	
 	// Settings
 	const CACHE_ID = 'instagram-feed';
-	public static $cache_seconds = 600; // 10 min
+	public static $cache_minutes = 10;
 
 	/**
 	 * Load a feed from an open graph resource
@@ -49,7 +49,7 @@ class Feed {
 		$response = $response->data;
 		
 		// Cache the response
-		Cache::put($cache_id, $response, self::$cache_seconds);
+		Cache::put($cache_id, $response, self::$cache_minutes);
 		
 		// Return the response
 		return $response;
