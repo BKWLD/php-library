@@ -1,5 +1,9 @@
 <?php namespace BKWLD\Utils;
 
+// Dependencies
+require_once('vendor/kwi-urllinker/UrlLinker.class.php');
+use \Kwi\UrlLinker;
+
 // Utilities for dealing with strings
 class String {
 
@@ -18,6 +22,16 @@ class String {
 		
 		// Otherwise, auto format it
 		return ucfirst(str_replace('_', ' ', $keyword));
+	}
+	
+	/**
+	 * Add HTML links to URLs in a string.  This loads a vendor PHP
+	 * file into this function because it registers global functions
+	 * that I don't want in the global space
+	 */
+	static public function linkify($text) {
+		$url_linker = new UrlLinker;
+		return $url_linker->parse($text);
 	}
 	
 }

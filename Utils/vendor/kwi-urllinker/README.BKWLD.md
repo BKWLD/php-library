@@ -1,0 +1,1 @@
+The .class varient I grabbed from here: https://github.com/beberlei/zelten/blob/master/src/Kwi/UrlLinker.php
