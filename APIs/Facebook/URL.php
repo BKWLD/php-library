@@ -1,7 +1,7 @@
 <?php namespace BKWLD\APIs\Facebook;
 
 /**
- * Utilities for dealing with user
+ * Utilities for generating and parsing urls
  */
 class URL {
 
