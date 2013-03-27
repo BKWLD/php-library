@@ -9,7 +9,7 @@ HTML::macro('vimeo', function($url, $width=500, $height=281, $options = null) {
 	// Default options
 	if (!$options) $options = array();
 	$options = (object) array_merge(array(
-		'id' => 'vimeo_player',
+		'id' => Str::random(8, 'alpha'),
 	), $options);
 	
 	// The video id is the last digits of the URL
