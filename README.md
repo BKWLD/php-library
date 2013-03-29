@@ -1,6 +1,6 @@
 # BKWLD PHP Library
 
-This is a bundle designed to work with Laravel.  It contains shared utility functions.  And probably more in the future.
+This is a bundle designed to work with Laravel but it tries to stay independent where possible.
 
 ## Contents
 
