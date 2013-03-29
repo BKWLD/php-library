@@ -45,6 +45,7 @@ class Feed {
 		
 		// Verify the response
 		$response = json_decode($response);
+		if (empty($response->meta->code)) throw new Exception('No meta code: '.print_r($response,true));
 		if ($response->meta->code != 200) throw new Exception('Instagram error:'.$response->meta->error_message);
 		$response = $response->data;
 		

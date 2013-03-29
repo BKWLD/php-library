@@ -60,7 +60,7 @@ class Tags {
 		
 		// If there are none, you're done
 		$response = json_decode($response);
-		if (empty($response->meta->code)) throw new Exception('No meta code');
+		if (empty($response->meta->code)) throw new Exception('No meta code: '.print_r($response,true));
 		if ($response->meta->code != 200) throw new Exception('Instagram error:'.$response->meta->error_message);
 		if (empty($response->data)) return;
 		
