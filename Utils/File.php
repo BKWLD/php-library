@@ -170,4 +170,37 @@ class File {
 		
 	}
 	
+	/**
+	 * Output an image directly to the browser
+	 * @param $string src The server path to an image
+	 */
+	static public function image($src) {
+		$src = realpath($src);
+
+		// Set headers
+		header("Content-Transfer-Encoding: binary");
+		header("Accept-Ranges: bytes");
+    header("Content-Length: ".filesize($src));
+    
+    // Set the content type using file extenions
+    switch(strtolower(pathinfo($src, PATHINFO_EXTENSION))) {
+    	case 'jpg':
+    	case 'jpeg':
+    		header('Content-type: image/jpeg');
+    		break;
+    	case 'gif':
+    		header('Content-type: image/gif');
+    		break;
+    	case 'png':
+    		header('Content-type: image/png'); 
+    		break;
+    	default: throw new Exception('Unknown file extension');
+    }
+    
+    // Output file
+    readfile($src);
+		die;
+		
+	}
+	
 }
