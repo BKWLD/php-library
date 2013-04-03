@@ -32,16 +32,20 @@ HTML::macro('youtube', function($url, $width=500, $height=281, $options = null) 
 	// Default options
 	if (!$options) $options = array();
 	$options = (object) array_merge(array(
-		'id' => '',
+		'id' => Str::random(8, 'alpha'),
 		'class' => 'vimeo_player',
 		'showinfo' => 0,
 		'autohide' => 1,
+		'rel' => 0,
 	), $options);
 	
 	// Build params
 	$params = http_build_query(array(
 		'showinfo' => $options->showinfo,
 		'autohide' => $options->autohide,
+		'origin' => URL::base(),
+		'playerapiid' => $options->id,
+		'rel' => $options->rel,
 	));
 	
 	// Parse the ID from the youtube url
