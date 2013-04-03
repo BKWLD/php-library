@@ -39,8 +39,13 @@ class Feed {
 		// Query
 		$facebook = Connect::sdk();
 		$response = $facebook->api($id.'/feed?'.$params);
-		$response = $response['data']; // Trim out the meta shit
+		$response = $response['data']; // Trim out the meta fields
 		
+		// Filter items with empty message fields
+		$response = array_filter($response, function($post) {
+			return !empty($post['message']);
+		});
+
 		// Cache the response
 		Cache::put($cache_id, $response, self::$cache_minutes);
 		

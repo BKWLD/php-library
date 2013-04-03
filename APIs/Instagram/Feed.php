@@ -41,9 +41,11 @@ class Feed {
 		$ch = curl_init($url);
 		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 		if (!($response = curl_exec($ch))) throw new Exception('Feed could not be executed');
+		$http_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
 		curl_close($ch);
 		
 		// Verify the response
+		if ($http_code != 200) throw new Exception('Bad HTTP code:'.$http_code);
 		$response = json_decode($response);
 		if (empty($response->meta->code)) throw new Exception('No meta code: '.print_r($response,true));
 		if ($response->meta->code != 200) throw new Exception('Instagram error:'.$response->meta->error_message);
