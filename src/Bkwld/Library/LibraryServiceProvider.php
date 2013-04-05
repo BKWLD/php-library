@@ -19,6 +19,14 @@ class LibraryServiceProvider extends ServiceProvider {
 	public function boot()
 	{
 		$this->package('bkwld/library');
+		
+		// Load simple, non-class based Laravel utilitis
+		require_once('Laravel/helpers.php');
+		require_once('Laravel/Validator.php');
+
+		// Make the constants class easier to use
+		class_alias('\BKWLD\Library\Utils\Constants', 'Constants');
+	
 	}
 
 	/**
