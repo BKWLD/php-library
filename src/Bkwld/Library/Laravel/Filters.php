@@ -1,11 +1,11 @@
-<?php namespace BKWLD\Library\Laravel;
+<?php namespace Bkwld\Library\Laravel;
 
 // Imports
-use \Laravel\Response;
-use \Laravel\Request;
-use \Laravel\Input;
-use \Laravel\Session;
-use \Laravel\Log;
+use Response;
+use Request;
+use Input;
+use Session;
+use Log;
 
 class Filters {
 	

@@ -1,4 +1,4 @@
-<?php namespace BKWLD\Library\APIs\Youtube;
+<?php namespace Bkwld\Library\APIs\Youtube;
 
 /**
  * Utilities for generating and parsing urls

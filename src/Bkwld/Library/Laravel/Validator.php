@@ -1,13 +1,13 @@
-<?php namespace BKWLD\Library\Laravel;
+<?php namespace Bkwld\Library\Laravel;
 
 // Dependencies
-use \Laravel\Input;
-use \Laravel\Lang;
-use \Laravel\Messages;
-use \Laravel\Redirect;
-use \Laravel\URL;
-use \Exception;
-use \Laravel\Database as DB;
+use Input;
+use Lang;
+use Messages;
+use Redirect;
+use URL;
+use Exception;
+use Database as DB;
 
 /**
  * Is like the unique validator but tests multiple columns.  All columns

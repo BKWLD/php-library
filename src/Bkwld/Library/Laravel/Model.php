@@ -1,4 +1,8 @@
-<?php namespace BKWLD\Library\Laravel;
+<?php namespace Bkwld\Library\Laravel;
+
+// Dependencies
+use Input;
+use Database;
 
 class Model {
 	
@@ -24,7 +28,7 @@ class Model {
 	 * used, which is the case when your query has a group by
 	 */
 	static public function paginate($query, $per_page) {
-		return $query->take($per_page)->skip((\Laravel\Input::get('page', 1)-1)*$per_page);
+		return $query->take($per_page)->skip((Input::get('page', 1)-1)*$per_page);
 	}
 	
 	/**
@@ -36,7 +40,7 @@ class Model {
 	 */
 	static public function count($query, $table = null) {
 		$column = $table ? $table.'.id' : 'id';
-		return $query->select(array(\Laravel\Database::raw('COUNT(DISTINCT '.$column.') AS total')))->first()->total;
+		return $query->select(array(Database::raw('COUNT(DISTINCT '.$column.') AS total')))->first()->total;
 	}
 	
 }

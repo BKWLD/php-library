@@ -1,4 +1,4 @@
-<?php namespace BKWLD\Library\Laravel;
+<?php namespace Bkwld\Library\Laravel;
 
 /**
  * Functions for working with Former

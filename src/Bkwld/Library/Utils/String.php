@@ -1,8 +1,8 @@
-<?php namespace BKWLD\Library\Utils;
+<?php namespace Bkwld\Library\Utils;
 
 // Dependencies
 require_once('vendor/kwi-urllinker/UrlLinker.class.php');
-use \Kwi\UrlLinker;
+use Kwi\UrlLinker;
 
 // Utilities for dealing with strings
 class String {
@@ -43,9 +43,11 @@ class String {
 		$url_linker = new UrlLinker;
 		return $url_linker->parse($text, $options);
 	}
-	
-	// Show a human timestamp for how much time has elapssed since the timestamp
-	// Adapted from http://www.zachstronaut.com/posts/2009/01/20/php-relative-date-time-string.html
+
+	/**
+	 * Show a human timestamp for how much time has elapssed since the timestamp
+	 * Adapted from http://www.zachstronaut.com/posts/2009/01/20/php-relative-date-time-string.html
+	 */
 	static public function time_elapsed($ptime, $options = null) {
 		
 		// Default options
@@ -84,5 +86,4 @@ class String {
 			}
 		}
 	}
-	
 }

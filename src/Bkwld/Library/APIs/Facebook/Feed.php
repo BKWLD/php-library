@@ -1,9 +1,9 @@
-<?php namespace BKWLD\Library\APIs\Facebook;
+<?php namespace Bkwld\Library\APIs\Facebook;
 
 // Dependencies
-use \Laravel\Cache;
+use Laravel\Cache;
 use \Exception;
-use \Laravel\Log;
+use Laravel\Log;
 
 
 /**

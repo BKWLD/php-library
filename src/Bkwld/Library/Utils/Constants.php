@@ -1,4 +1,4 @@
-<?php namespace BKWLD\Library\Utils;
+<?php namespace Bkwld\Library\Utils;
 
 /**
  * A place to put constants, all under the BKWLD namespace

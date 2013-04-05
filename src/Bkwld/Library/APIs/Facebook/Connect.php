@@ -1,8 +1,8 @@
-<?php namespace BKWLD\Library\APIs\Facebook;
+<?php namespace Bkwld\Library\APIs\Facebook;
 
 // Dependencies
 require_once 'sdk/src/facebook.php';
-use \Laravel\Config;
+use Laravel\Config;
 
 /**
  * Connect to Twitter using Laravel credentials

@@ -1,4 +1,4 @@
-<?php namespace BKWLD\Library\APIs\Twitter;
+<?php namespace Bkwld\Library\APIs\Twitter;
 
 // Dependencies
 require_once 'twitteroauth/twitteroauth/twitteroauth.php';

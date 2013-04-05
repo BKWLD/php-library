@@ -1,4 +1,4 @@
-<?php namespace BKWLD\Library\APIs\Facebook;
+<?php namespace Bkwld\Library\APIs\Facebook;
 
 /**
  * Utilities for generating and parsing urls

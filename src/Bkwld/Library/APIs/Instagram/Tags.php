@@ -1,4 +1,4 @@
-<?php namespace BKWLD\Library\APIs\Instagram;
+<?php namespace Bkwld\Library\APIs\Instagram;
 
 // Dependencies
 use \Laravel\Cache;

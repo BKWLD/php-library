@@ -1,7 +1,7 @@
-<?php namespace BKWLD\Library\Laravel;
+<?php namespace Bkwld\Library\Laravel;
 
 // Dependencies
-use Laravel\Request;
+use Request;
 
 class Input {
 	
