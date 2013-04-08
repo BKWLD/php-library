@@ -22,7 +22,8 @@ class LibraryServiceProvider extends ServiceProvider {
 				
 		// Register Laravel helpers on the running app
 		Laravel\Macros::register($this->app);
-		// require_once('Laravel/Validator.php');
+		
+		
 
 		// Make the constants class easier to use
 		// class_alias('\BKWLD\Library\Utils\Constants', 'Constants');
