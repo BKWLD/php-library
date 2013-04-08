@@ -10,15 +10,37 @@ This is a bundle designed to work with Laravel but it tries to stay independent 
 
 ### Laravel 4 refactor status
 
+My plan is to refactor things as I run across dependencies on them in other libraries.
+
 * [ ] Api
-* Laravel
-  * [ ] Filters
-  * [ ] Former
-  * [ ] Input
-  * [ ] Macros
-  * [ ] Model
-  * [ ] Validator
+	* [ ] Facebook
+	* [ ] Instagram
+	* [ ] Twitter
+	* [ ] Youtube
+* [ ] Laravel
+	* [ ] Filters
+		* [ ] csrf()
+	* [ ] Former
+		* [ ] assoc_array_for_radios()
+	* [ ] Input
+		* [ ] json_or_input()
+		* [ ] json_and_input()
+		* [ ] remove()
+	* [x] Macros
+	* [ ] Model
+		* [ ] eloquent_to_array()
+		* [ ] ids()
+		* [ ] paginate()
+		* [ ] count()
+	* [ ] Validator
+		* [ ] unique_with()
+		* [ ] require_just_one()
 * [ ] Utils
+	* [ ] Collection
+	* [ ] Constants
+	* [ ] File
+	* [ ] Html
+	* [ ] String
 
 ## Installation
 
@@ -26,5 +48,15 @@ This is a bundle designed to work with Laravel but it tries to stay independent 
 2. Add as a provider in your app/config/app.php's provider list: `'Bkwld\Library\LibraryServiceProvider',`
 
 ## Usage
+
+### API
+
+TODO
+
+### Laravel
+
+TODO
+
+### Utils
 
 TODO

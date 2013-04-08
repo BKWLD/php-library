@@ -66,7 +66,6 @@ class Validator {
 	static public function messages() {
 		return array(
 			'unique_with' => Lang::line('validation.unique')->get(),
-			'required_unless' => '',
 		);
 	}
 	
