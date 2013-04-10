@@ -27,7 +27,7 @@ use Database as DB;
  * )
  * 
  */
-\Validator::register('unique_with', function($attribute, $value, $parameters) {
+\Validator::extend('unique_with', function($attribute, $value, $parameters) {
 	
     // You must specify additional columns
 		if (!isset($parameters[0]) || !isset($parameters[1])) throw new Exception('Table and additional columns must be provided');
@@ -65,7 +65,7 @@ class Validator {
 	 */
 	static public function messages() {
 		return array(
-			'unique_with' => Lang::line('validation.unique')->get(),
+			'unique_with' => Lang::get('validation.unique'),
 		);
 	}
 	

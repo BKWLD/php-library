@@ -1,6 +1,6 @@
 {
 	"name": "bkwld/library",
-	"description": "",
+	"description": "Misc PHP code",
 	"authors": [{ "name": "Robert Reinhard" }  ],
 	"license": "MIT",
 	"require": {
