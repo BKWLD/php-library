@@ -19,6 +19,26 @@ abstract class GenericModel {
 	}
 	
 	/**
+	 * Convert the model instance to JSON.
+	 *
+	 * @param  int  $options
+	 * @return string
+	 */
+	public function toJson($options = 0) {
+		return json_encode($this->toArray(), $options);
+	}
+
+	/**
+	 * Convert the model instance to an array.
+	 *
+	 * @return array
+	 */
+	public function toArray() {
+		return $this->attributes;
+	}
+	
+
+	/**
 	 * Dynamically retrieve attributes on the model.
 	 *
 	 * @param  string  $key
@@ -59,6 +79,15 @@ abstract class GenericModel {
 	 */
 	public function __unset($key) {
 		unset($this->attributes[$key]);
+	}
+	
+	/**
+	 * Convert the model to its string representation.
+	 *
+	 * @return string
+	 */
+	public function __toString() {
+		return $this->toJson();
 	}
 	
 }
