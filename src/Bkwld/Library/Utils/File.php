@@ -10,7 +10,7 @@ class File {
 	 * @param string $dst Path to where you want it go
 	 * @return mixed New path or false on error
 	 */
-	static public function move_uploaded_file_uniquely($src, $dst) {
+	static public function moveUploadedFileUniquely($src, $dst) {
 		
 		// Make sure it's an uploaded file
 		if (!is_uploaded_file($src)) return false;
@@ -45,13 +45,13 @@ class File {
 	 * @param number $length How many to make per depth
 	 * @return mixed New path (with trailing slash) or false on error
 	 */
-	static public function make_sub_dirs($dir, $depth = 2, $length = 16) {
+	static public function makeSubDirs($dir, $depth = 2, $length = 16) {
 		
 		// Make sure the destination is writeable
 		if (!is_dir($dir) || !is_writable($dir)) return false;
 		
 		// Make sure the destination ends in a slash
-		$dir = self::add_trailing_slash($dir);
+		$dir = self::addTrailingSlash($dir);
 		
 		// Loop through the depth, making directories
 		for ($i=0; $i<$depth; $i++) {
@@ -73,10 +73,10 @@ class File {
 	 * @param string $dst Directory of where to save the final file
 	 * @return mixed New path or false on error
 	 */
-	static public function organize_uploaded_file($src, $dst_dir) {
+	static public function organizeUploadedFile($src, $dst_dir) {
 		
 		// Make sure the destination ends in a slash
-		$dst_dir = self::add_trailing_slash($dst_dir);
+		$dst_dir = self::addTrailingSlash($dst_dir);
 		
 		// If $src is a FILES array, get the tmp and real filenames out
 		if (is_array($src)) {
@@ -92,13 +92,13 @@ class File {
 		if (!is_uploaded_file($src)) return false;
 		
 		// Make nested sub directories
-		if (!($dst_dir = self::make_sub_dirs($dst_dir))) return false;
+		if (!($dst_dir = self::makeSubDirs($dst_dir))) return false;
 		
 		// Make the file a safe filename
 		$filename = preg_replace('/[^a-z0-9-_.]/', '', strtolower($filename));
 		
 		// Move the file out of it's current directory, into the target destination
-		if (!($path = self::move_uploaded_file_uniquely($src, $dst_dir.$filename))) return false;
+		if (!($path = self::moveUploadedFileUniquely($src, $dst_dir.$filename))) return false;
 		
 		// Return the final path
 		return $path;
@@ -109,7 +109,7 @@ class File {
 	 * @param string $dir The path to a directory
 	 * @return string The slash added to the name
 	 */
-	static public function add_trailing_slash($dir) {
+	static public function addTrailingSlash($dir) {
 		if (substr($dir, -1, 1) != '/') $dir .= '/';
 		return $dir;
 	}
@@ -121,7 +121,7 @@ class File {
 	 * @param string $path The absolute path in the filesystem
 	 * @return string The converted, web friendly relative path
 	 */
-	static public function public_path($path) {
+	static public function publicPath($path) {
 		
 		// Require a DOCUMENT_ROOT.  It could be missing when executed from the command line
 		if (empty($_SERVER['DOCUMENT_ROOT'])) throw new \Exception('DOCUMENT_ROOT not defined');
