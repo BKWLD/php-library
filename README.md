@@ -38,7 +38,7 @@ My plan is to refactor things as I run across dependencies on them in other libr
 * [ ] Utils
 	* [ ] Collection
 	* [ ] Constants
-	* [ ] File
+	* [x] File
 	* [ ] Html
 	* [ ] String
 

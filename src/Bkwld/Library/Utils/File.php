@@ -82,6 +82,11 @@ class File {
 		if (is_array($src)) {
 			$filename = $src['name'];
 			$src = $src['tmp_name'];
+			
+		// If $src is an instance of Symfony's UploadedFile class
+		} else if (is_a($src, 'Symfony\Component\HttpFoundation\File\UploadedFile')) {
+			$filename = $src->getClientOriginalName();
+			$src = $src->getRealPath();
 						
 		// Otherwise, use the filename of $src for the destination path
 		} else {
@@ -101,7 +106,7 @@ class File {
 		if (!($path = self::moveUploadedFileUniquely($src, $dst_dir.$filename))) return false;
 		
 		// Return the final path
-		return $path;
+		return realpath($path);
 	}
 	
 	/**
