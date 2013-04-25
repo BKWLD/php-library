@@ -69,7 +69,7 @@ class File {
 	 * Combine a bunch of comon operations on uploaded files into a single
 	 * command: Simplify the filename, make it unique, and store it in a nested
 	 * directory
-	 * @param mixed $src Path to the uploaded file or FILES array
+	 * @param mixed $src Path to the uploaded file or FILES array or like Laravel's `Input::file('image')`
 	 * @param string $dst Directory of where to save the final file
 	 * @return mixed New path or false on error
 	 */
