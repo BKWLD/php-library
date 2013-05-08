@@ -1,6 +1,7 @@
 <?php namespace Bkwld\Library\Utils;
 
 // Dependencies
+use Lang;
 require_once('vendor/kwi-urllinker/UrlLinker.class.php');
 use Kwi\UrlLinker;
 
@@ -12,12 +13,12 @@ class String {
 	 * @param string $keyword i.e. "some_multi_key"
 	 * @return string i.e. "Some multi key"
 	 */
-	static public function title_from_key($keyword) {
+	static public function titleFromKey($keyword) {
 		
 		// Check for the keyword in Laravel's translation system
-		if (function_exists('__')) {
-			if (\Laravel\Lang::has('admin.'.$keyword)) return __('admin.'.$keyword);
-			if (\Laravel\Lang::has('application.'.$keyword)) return __('application.'.$keyword);
+		if (class_exists('Lang')) {
+			if (Lang::has('admin.'.$keyword)) return Lang::get('admin.'.$keyword);
+			if (Lang::has('application.'.$keyword)) return Lang::get('app.'.$keyword);
 		}
 		
 		// Otherwise, auto format it
@@ -48,7 +49,7 @@ class String {
 	 * Show a human timestamp for how much time has elapssed since the timestamp
 	 * Adapted from http://www.zachstronaut.com/posts/2009/01/20/php-relative-date-time-string.html
 	 */
-	static public function time_elapsed($ptime, $options = null) {
+	static public function timeElapsed($ptime, $options = null) {
 		
 		// Default options
 		if (!$options) $options = array();
@@ -85,5 +86,17 @@ class String {
 				else return $r .($options['spacing']?' ':''). $str;
 			}
 		}
+	}
+	
+	/**
+	 * Remove everything up the substring from a string.
+	 * Ex: trimUntil('/var/www/site/public/uploads/01/01/file.jpg', '/uploads');
+	 * @param string $str The string that we're trimming
+	 * @param string $substr The string that indicates where to stop trimming
+	 */
+	static public function trimUntil($str, $substr) {
+		$pos = strpos($str, $substr);
+		if ($pos === false) return $str;
+		return substr($str, $pos);
 	}
 }

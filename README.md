@@ -40,7 +40,7 @@ My plan is to refactor things as I run across dependencies on them in other libr
 	* [ ] Constants
 	* [x] File
 	* [ ] Html
-	* [ ] String
+	* [x] String
 
 ## Installation
 
