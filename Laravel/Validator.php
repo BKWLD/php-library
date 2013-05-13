@@ -1,13 +1,15 @@
 <?php namespace BKWLD\Laravel;
 
-// Dependencies
-use \Laravel\Input;
-use \Laravel\Lang;
-use \Laravel\Messages;
-use \Laravel\Redirect;
-use \Laravel\URL;
-use \Exception;
-use \Laravel\Database as DB;
+// Dpendencies
+use Laravel\Input;
+use Laravel\Lang;
+use Laravel\Messages;
+use Laravel\Redirect;
+use Laravel\Request;
+use Laravel\Response;
+use Laravel\URL;
+use Exception;
+use Laravel\Database as DB;
 
 /**
  * Is like the unique validator but tests multiple columns.  All columns
@@ -105,14 +107,20 @@ class Validator {
 		// If only one field has data, we're good.  Return false to indicate there is no error
 		if ($found === 1) return false;
 
-		// Otherwise, return a redirect response with the error
+		// Otherwise, build a response response with the error
 		$titles = array_map('\BKWLD\Utils\String::title_from_key', $fields);
 		$message = 'You must specify <strong>exactly one</strong> of the following fields: '.implode(', ', $titles);
 		$errors = new Messages();
 		foreach($fields as $field) { $errors->add($field, $message); }
-		return Redirect::to(URL::current())
-			->with_errors($errors)
-			->with_input();
 		
-	}
+		// Return response
+		if (Request::ajax()) {
+			return Response::json($errors, 400);
+		} else {
+			return Redirect::to(URL::current())
+				->with_errors($errors)
+				->with_input();
+			}
+		}
+		
 }
