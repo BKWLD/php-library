@@ -107,7 +107,7 @@ class File {
 		if (!($path = self::moveUploadedFileUniquely($src, $dst_dir.$filename))) return false;
 		
 		// Make the file group writeable
-		chmod($path, 664);
+		chmod($path, 0664);
 		
 		// Return the final path
 		return realpath($path);
