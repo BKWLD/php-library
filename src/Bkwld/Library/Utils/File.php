@@ -58,7 +58,7 @@ class File {
 			$new_dir = str_pad(mt_rand(0, $length - 1), strlen($length), '0', STR_PAD_LEFT);
 			$dir .= $new_dir.'/'; // Update our directory path
 			if (is_dir($dir)) continue; // This directory already exists, go to next depth
-			if (!mkdir($dir, 0755)) return false; // Make the dir or return false if error
+			if (!mkdir($dir, 0775)) return false; // Make the dir or return false if error
 		}
 		
 		// Return new path
