@@ -59,6 +59,7 @@ class File {
 			$dir .= $new_dir.'/'; // Update our directory path
 			if (is_dir($dir)) continue; // This directory already exists, go to next depth
 			if (!mkdir($dir, 0775)) return false; // Make the dir or return false if error
+			chmod($dir, 0775); // The mkdir permissions weren't taking
 		}
 		
 		// Return new path
@@ -104,6 +105,9 @@ class File {
 		
 		// Move the file out of it's current directory, into the target destination
 		if (!($path = self::moveUploadedFileUniquely($src, $dst_dir.$filename))) return false;
+		
+		// Make the file group writeable
+		chmod($path, 664);
 		
 		// Return the final path
 		return realpath($path);
