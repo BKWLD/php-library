@@ -120,7 +120,6 @@ class Validator {
 			return Redirect::to(URL::current())
 				->with_errors($errors)
 				->with_input();
-			}
 		}
-		
+	}		
 }
