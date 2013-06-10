@@ -18,8 +18,8 @@ My plan is to refactor things as I run across dependencies on them in other libr
 	* [ ] Twitter
 	* [ ] Youtube
 * [ ] Laravel
-	* [ ] Filters
-		* [ ] csrf()
+	* [x] Filters
+		* [x] csrf()
 	* [ ] Former
 		* [ ] assoc_array_for_radios()
 	* [ ] Input
