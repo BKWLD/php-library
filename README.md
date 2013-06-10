@@ -22,10 +22,10 @@ My plan is to refactor things as I run across dependencies on them in other libr
 		* [x] csrf()
 	* [ ] Former
 		* [ ] assoc_array_for_radios()
-	* [ ] Input
-		* [ ] json_or_input()
-		* [ ] json_and_input()
-		* [ ] remove()
+	* [x] Input
+		* [x] json_or_input()
+		* [x] json_and_input()
+		* [x] remove()
 	* [x] Macros
 	* [ ] Model
 		* [ ] eloquent_to_array()
