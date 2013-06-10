@@ -8,14 +8,14 @@ class Collection {
 	 * @param array $ar
 	 * @return mixed The random value
 	 */
-	static public function random_value($ar) {
+	static public function randomValue($ar) {
 		return $ar[array_rand($ar)];
 	}
 	
 	/**
 	 * Replace all the empty strings in an array with NULL
 	 */
-	static public function null_empties($ar) {
+	static public function nullEmpties($ar) {
 		foreach($ar as &$val) {
 			if (empty($val)) $val = null;
 		}
@@ -26,7 +26,7 @@ class Collection {
 	 * Check if the key is either in an array (it is the value of 
 	 * a numeric key) or if it itself a key
 	 */
-	static public function key_or_val_exists($key, $ar) {
+	static public function keyOrValueExists($key, $ar) {
 		return array_key_exists($key, $ar) || in_array($key, $ar);
 	}
 	

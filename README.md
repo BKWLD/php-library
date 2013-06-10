@@ -36,7 +36,7 @@ My plan is to refactor things as I run across dependencies on them in other libr
 		* [ ] unique_with()
 		* [ ] require_just_one()
 * [ ] Utils
-	* [ ] Collection
+	* [x] Collection
 	* [ ] Constants
 	* [x] File
 	* [ ] Html
