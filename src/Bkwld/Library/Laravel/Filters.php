@@ -5,7 +5,6 @@ use Response;
 use Request;
 use Input;
 use Session;
-use Log;
 
 class Filters {
 	
@@ -14,24 +13,17 @@ class Filters {
 	 * the before filter like:
 	 * 
 	 * Route::filter('before', function() {
-	 *	if (!URI::is('/exempt/route') && 
-	 *		$result = BKWLD\Laravel\Filters::csrf()) {
-	 *		return $result;
-	 *	}
+	 *	BKWLD\Laravel\Filters::csrf()) {
 	 * });
 	 *
 	 */
 	static public function csrf() {
 		
-		// The response to this call is an array, so break out the value
-		$header_csrf = Request::header('x-csrf');
-		if (!empty($header_csrf)) $header_csrf = $header_csrf[0];
-		
 		// Wrap all requests in the CSRF filter.  This
 		// makes sure all non-GET requests have a valid CSRF.
 		if (Request::getMethod() != 'GET'
 			&& Input::get('_token') != Session::token() // Checks form submit
-			&& $header_csrf != Session::token() // Checks AJAX
+			&& Request::header('x-csrf') != Session::token() // Checks AJAX
 			) {
 			
 			// Show error screen
