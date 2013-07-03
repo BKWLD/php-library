@@ -66,7 +66,7 @@ class Html {
 	 * Make a gravatar image from an email
 	 */
 	static public function gravatar($email) {
-		return 'http://www.gravatar.com/avatar/'.md5(strtolower(trim($email)));
+		return '//www.gravatar.com/avatar/'.md5(strtolower(trim($email)));
 	}
 
 	
