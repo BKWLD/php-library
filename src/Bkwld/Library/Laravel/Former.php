@@ -25,7 +25,7 @@ class Former {
 	 * )
 	 * 
 	 */
-	static public function assoc_array_for_radios($src) {
+	static public function radioArray($src) {
 		$out = array();
 		foreach($src as $key => $val) {
 			if (!count($out)) $out[$val] = array('value' => $key, 'checked' => true);

@@ -20,8 +20,8 @@ My plan is to refactor things as I run across dependencies on them in other libr
 * [ ] Laravel
 	* [x] Filters
 		* [x] csrf()
-	* [ ] Former
-		* [ ] assoc_array_for_radios()
+	* [x] Former
+		* [x] assoc_array_for_radios()
 	* [x] Input
 		* [x] json_or_input()
 		* [x] json_and_input()
