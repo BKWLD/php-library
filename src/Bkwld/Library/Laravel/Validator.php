@@ -1,35 +1,35 @@
 <?php namespace Bkwld\Library\Laravel;
 
 // Dependencies
-use Input;
-use Lang;
-use Messages;
-use Redirect;
-use URL;
 use Exception;
-use Database as DB;
+use Input;
+use Redirect;
+use Symfony\Component\HttpFoundation\File\File;
+use URL;
 
-/**
- * Is like the unique validator but tests multiple columns.  All columns
- * must be the same for the validation to fail.  Note, it
- * looks for the values of the other referenced column from Input::get()
- * 
- * Params:
- * - Table name
- * - The other columns.  Semicolon delimited
- * - Optional column name of the attribute
- * - Optional id to ignore
- * - Optional column for id
- * 
- * Example:
- * array(
- * 	'slug' => 'unique_intersect:tags,type;category,slug,10'
- * )
- * 
- */
-\Validator::extend('unique_with', function($attribute, $value, $parameters) {
+class Validator {
 	
-    // You must specify additional columns
+	/**
+	 * Is like the unique validator but tests multiple columns.  All columns
+	 * must be the same for the validation to fail.  Note, it
+	 * looks for the values of the other referenced column from Input::get()
+	 * 
+	 * Params:
+	 * - Table name
+	 * - The other columns.  Semicolon delimited
+	 * - Optional column name of the attribute
+	 * - Optional id to ignore
+	 * - Optional column for id
+	 * 
+	 * Example:
+	 * array(
+	 * 	'slug' => 'unique_with:tags,type;category,slug,10'
+	 * )
+	 * 
+	 */
+	public function uniqueWith($attribute, $value, $parameters) {
+		
+		// You must specify additional columns
 		if (!isset($parameters[0]) || !isset($parameters[1])) throw new Exception('Table and additional columns must be provided');
 
 		// Optional column name for the attribtue
@@ -53,36 +53,32 @@ use Database as DB;
 		}
 
 		return $query->count() == 0;
-});
-
-/**
- * Validating logic that doesn't make sense as a registered Laravel validator
- */
-class Validator {
+		
+	}
 	
 	/**
-	 * Return messages for all validators by executing `BKWLD\Laravel\Validator::messages()`
+	 * Test if a the field has a file or references a valid file path
 	 */
-	static public function messages() {
-		return array(
-			'unique_with' => Lang::get('validation.unique'),
-		);
+	public function file($attribute, $value, $parameters) {
+		if ($value instanceof File && $value->getPath() != '') return true;
+		if (is_file(public_path().$value)) return true;
+		return false;
 	}
 	
 	/**
 	 * To succeed, all but one of the referenced fields must be empty.  In other words, one and only one field must
-	 * have a value.
+	 * have a value.  This isn't desigened to be run through the validator (I couldn't get it to work that way)
 	 * @param $fields An array containing the field names to check
 	 * @param $input An associateive array of ht einput to check
 	 * 
 	 * Example: (this would be put in a Decoy model)
-	 * public function on_validating($input) {
-	 *	if ($response = BKWLD\Laravel\Validator::require_just_one(array('image', 'vimeo_url'), $input)) return $response;
-	 *	parent::on_validating($input);
+	 * public function validating($input) {
+	 *	if ($response = Bkwld\Library\Laravel\Validator::requireJustOne(array('image', 'vimeo_url'), $input)) return $response;
+	 *	parent::validating($input);
 	 * }
 	 * 
 	 */
-	static public function require_just_one($fields, $input = null) {
+	static public function requireJustOne($fields, $input = null) {
 		
 		// Input is optional
 		if (empty($input)) $input == Input::get();
@@ -107,11 +103,10 @@ class Validator {
 		// Otherwise, return a redirect response with the error
 		$titles = array_map('\BKWLD\Utils\String::title_from_key', $fields);
 		$message = 'You must specify <strong>exactly one</strong> of the following fields: '.implode(', ', $titles);
-		$errors = new Messages();
-		foreach($fields as $field) { $errors->add($field, $message); }
+		$errors = array();
+		foreach($fields as $field) { $errors[$field] = $message; }
 		return Redirect::to(URL::current())
-			->with_errors($errors)
-			->with_input();
-		
+			->withErrors($errors)
+			->withInput();
 	}
 }

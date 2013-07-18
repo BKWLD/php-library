@@ -1,5 +1,6 @@
 <?php namespace Bkwld\Library;
 
+// Dependencies
 use Illuminate\Support\ServiceProvider;
 
 class LibraryServiceProvider extends ServiceProvider {
@@ -23,7 +24,10 @@ class LibraryServiceProvider extends ServiceProvider {
 		// Register Laravel helpers on the running app
 		Laravel\Macros::register($this->app);
 		
-		
+		// Register validators
+		$validator = $this->app->make('validator');
+		$validator->extend('unique_with', 'Bkwld\Library\Laravel\Validator@uniqueWith');
+		$validator->extend('file', 'Bkwld\Library\Laravel\Validator@file');
 
 		// Make the constants class easier to use
 		// class_alias('\BKWLD\Library\Utils\Constants', 'Constants');

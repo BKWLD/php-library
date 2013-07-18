@@ -32,9 +32,9 @@ My plan is to refactor things as I run across dependencies on them in other libr
 		* [ ] ids()
 		* [ ] paginate()
 		* [ ] count()
-	* [ ] Validator
-		* [ ] unique_with()
-		* [ ] require_just_one()
+	* [x] Validator
+		* [x] unique_with()
+		* [x] require_just_one()
 * [ ] Utils
 	* [x] Collection
 	* [X] Constants
@@ -46,6 +46,10 @@ My plan is to refactor things as I run across dependencies on them in other libr
 
 1. Add to your composer.json's requires: `"bkwld/library": "~2.0"`.  Then do a regular composer install.
 2. Add as a provider in your app/config/app.php's provider list: `'Bkwld\Library\LibraryServiceProvider',`
+3. Add these validation rules:
+
+	"file" => "The :attribute must be a file",
+	"unique_with" = "The :attribute has already been taken",
 
 ## Usage
 
