@@ -49,7 +49,7 @@ My plan is to refactor things as I run across dependencies on them in other libr
 3. Add these validation rules:
 
 	"file" => "The :attribute must be a file",
-	"unique_with" = "The :attribute has already been taken",
+	"unique_with" => "The :attribute has already been taken",
 
 ## Usage
 
