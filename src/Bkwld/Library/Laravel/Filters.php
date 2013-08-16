@@ -21,9 +21,12 @@ class Filters {
 		
 		// Wrap all requests in the CSRF filter.  This
 		// makes sure all non-GET requests have a valid CSRF.
-		if (Request::getMethod() != 'GET'
-			&& Input::get('_token') != Session::token() // Checks form submit
-			&& Request::header('x-csrf') != Session::token() // Checks AJAX
+		$method = Request::getMethod();
+		$token = Session::token();
+		if ($method != 'GET'
+			&& $method != 'HEAD'
+			&& Input::get('_token') != $token // Checks form submit
+			&& Request::header('x-csrf') != $token // Checks AJAX
 			) {
 			
 			// Show error screen
