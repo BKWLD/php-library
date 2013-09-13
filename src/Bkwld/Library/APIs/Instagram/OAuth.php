@@ -1,9 +1,9 @@
 <?php namespace Bkwld\Library\APIs\Instagram;
 
 // Dependencies
-use \Laravel\Config;
-use \Laravel\Log;
-use \Exception;
+use Config;
+use Log;
+use Exception;
 
 class OAuth {
 	
@@ -29,7 +29,7 @@ class OAuth {
    * 		}
    * }
 	 */
-	public static function exchange_code($code) {
+	public static function exchangeCode($code) {
 		
 		// Create the URL
 		$url = 'https://api.instagram.com/oauth/access_token';

@@ -1,11 +1,11 @@
 <?php namespace Bkwld\Library\APIs\Instagram;
 
 // Dependencies
-use \Laravel\Cache;
-use \Laravel\Log;
-use \Laravel\Config;
-use \Laravel\Request;
-use \Exception;
+use Cache;
+use Log;
+use Config;
+use Request;
+use Exception;
 
 class Tags {
 	

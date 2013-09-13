@@ -1,10 +1,10 @@
 <?php namespace Bkwld\Library\APIs\Instagram;
 
 // Dependencies
-use \Laravel\Cache;
-use \Exception;
-use \Laravel\Log;
-use \Laravel\Config;
+use Cache;
+use Exception;
+use Log;
+use Config;
 
 /**
  * Load a feed and caches it
