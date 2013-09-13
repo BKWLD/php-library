@@ -1,6 +1,7 @@
 <?php namespace Bkwld\Library;
 
 // Dependencies
+use Input;
 use Illuminate\Support\ServiceProvider;
 
 class LibraryServiceProvider extends ServiceProvider {
@@ -38,14 +39,14 @@ class LibraryServiceProvider extends ServiceProvider {
 		// 	}
 		// }
 		
-		// Register commands
-		$this->app->singleton('command.library.instagram.oauth_url', function($app) {
-			return new APIs\Instagram\Commands\OAuthURL;
+		// Instagram access token helper
+		$view = $this->app->make('view');
+		$this->app['router']->get('/oauth/instagram/access_token', function() use ($view) {
+			return $view->make('library::instagram.access_token', array(
+				'url' => APIs\Instagram\OAuth::url(),
+				'response' => Input::has('code') ? APIs\Instagram\OAuth::exchangeCode(Input::get('code')) : null,
+			));
 		});
-		$this->app->singleton('command.library.instagram.access_token', function($app) {
-			return new APIs\Instagram\Commands\AccessToken;
-		});
-		$this->commands(array('command.library.instagram.oauth_url', 'command.library.instagram.access_token'));
 
 		// Make the constants class easier to use
 		// class_alias('\BKWLD\Library\Utils\Constants', 'Constants');
@@ -57,7 +58,7 @@ class LibraryServiceProvider extends ServiceProvider {
 	 * @return array
 	 */
 	public function provides() {
-		return array('command.library.instagram.oauth_url', 'command.library.instagram.access_token');
+		return array();
 	}
 
 }
