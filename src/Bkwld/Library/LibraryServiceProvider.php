@@ -31,14 +31,6 @@ class LibraryServiceProvider extends ServiceProvider {
 		$validator->extend('unique_with', 'Bkwld\Library\Laravel\Validator@uniqueWith');
 		$validator->extend('file', 'Bkwld\Library\Laravel\Validator@file');
 		
-		// If doing local development, auto generate oauth redirect uris
-		// if ($this->app->environment() == 'local') {
-		// 	foreach(array('instagram', 'twitter') as $service) {
-		// 		$this->app['router']->get('/oauth/');
-		// 		Route::get($this->dir.'/commands', array('uses' => 'Bkwld\Decoy\Controllers\Commands@index', 'as' => 'decoy\commands'));
-		// 	}
-		// }
-		
 		// Instagram access token helper
 		$view = $this->app->make('view');
 		$this->app['router']->get('/oauth/instagram/access_token', function() use ($view) {
