@@ -1,9 +1,9 @@
 <?php namespace Bkwld\Library\APIs\Twitter;
 
 // Dependencies
-use \Laravel\Cache;
-use \Laravel\Log;
-use \Exception;
+use Cache;
+use Log;
+use Exception;
 
 class Search {
 	

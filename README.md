@@ -14,8 +14,8 @@ My plan is to refactor things as I run across dependencies on them in other libr
 
 * [ ] Api
 	* [ ] Facebook
-	* [ ] Instagram
-	* [ ] Twitter
+	* [x] Instagram - Just user feed tested
+	* [x] Twitter - Just user feed tested
 	* [ ] Youtube
 * [ ] Laravel
 	* [x] Filters
@@ -56,6 +56,8 @@ My plan is to refactor things as I run across dependencies on them in other libr
 ### API
 
 #### Getting access token
+
+You would hard code an access token into your site for cases like fetching your own Instagram feed.
 
 - [Instagram access token helper](/oauth/instagram/access_token)
 

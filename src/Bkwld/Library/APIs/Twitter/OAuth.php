@@ -1,13 +1,13 @@
 <?php namespace Bkwld\Library\APIs\Twitter;
 
 // Dependencies
-use \Laravel\Config;
-use \Laravel\Log;
-use \Laravel\Session;
-use \Laravel\Input;
-use \Exception;
+use Config;
+use Log;
+use Session;
+use Input;
+use Exception;
 require_once 'twitteroauth/twitteroauth/twitteroauth.php';
-use \TwitterOAuth;
+use TwitterOAuth;
 
 class OAuth {
 	

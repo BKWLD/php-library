@@ -2,8 +2,8 @@
 
 // Dependencies
 require_once 'twitteroauth/twitteroauth/twitteroauth.php';
-use \TwitterOAuth;
-use \Laravel\Config;
+use TwitterOAuth;
+use Config;
 
 /**
  * Connect to Twitter using Laravel credentials

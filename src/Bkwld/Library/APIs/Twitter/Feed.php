@@ -1,9 +1,9 @@
 <?php namespace Bkwld\Library\APIs\Twitter;
 
 // Dependencies
-use \Laravel\Cache;
-use \Exception;
-use \Laravel\Log;
+use Cache;
+use Exception;
+use Log;
 
 /**
  * Run get lists of tweets and cache them
@@ -23,7 +23,7 @@ class Feed {
 		
 		// Return cached response if exists
 		$cache_id = self::CACHE_ID.$username;
-		if ($cached = Cache::get($cache_id)) return $cached;
+		if (self::$cache_minutes && $cached = Cache::get($cache_id)) return $cached;
 		
 		// Default options
 		$defaults = array(
@@ -36,9 +36,7 @@ class Feed {
 		);
 		
 		// Apply user options
-		if (is_array($options)) $options = array_merge($defaults, $options);
-
-		// Build query
+		$options = is_array($options) ? array_merge($defaults, $options) : $defaults;
 		$params = http_build_query($options);
 		
 		// Get the tweets
@@ -52,7 +50,7 @@ class Feed {
 		}
 		
 		// Cache the response
-		Cache::put($cache_id, $response, self::$cache_minutes);
+		if (self::$cache_minutes) Cache::put($cache_id, $response, self::$cache_minutes);
 		
 		// Return the response
 		return $response;

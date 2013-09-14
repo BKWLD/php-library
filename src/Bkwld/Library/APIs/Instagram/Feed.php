@@ -24,7 +24,7 @@ class Feed {
 		
 		// Return cached response if exists
 		$cache_id = self::CACHE_ID.$id;
-		if ($cached = Cache::get($cache_id)) return $cached;
+		if (self::$cache_minutes && $cached = Cache::get($cache_id)) return $cached;
 		
 		// Default options
 		$defaults = array(
@@ -33,7 +33,7 @@ class Feed {
 		);
 		
 		// Apply options
-		if (is_array($options)) $options = array_merge($defaults, $options);
+		$options = is_array($options) ? array_merge($defaults, $options) : $defaults;
 		$params = http_build_query($options);
 		
 		// Query
@@ -52,7 +52,7 @@ class Feed {
 		$response = $response->data;
 		
 		// Cache the response
-		Cache::put($cache_id, $response, self::$cache_minutes);
+		if (self::$cache_minutes) Cache::put($cache_id, $response, self::$cache_minutes);
 		
 		// Return the response
 		return $response;
