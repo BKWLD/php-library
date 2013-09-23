@@ -43,11 +43,11 @@ class Feed {
 		$connection = Connect::OAuth();
 		$request = 'statuses/user_timeline?'.$params;
 		$response = $connection->get('statuses/user_timeline.json?'.$params);
-		if (!empty($response->errors) || !empty($response->error)) {
-			Cache::put($cache_id, array(), self::$cache_minutes);
-			if (!empty($response->errors)) throw new Exception('Twitter error: '.$response->errors[0]->message);
-			else throw new Exception('Twitter error: '.$response->error);
-		}
+		
+		// Test response for errors
+		if (!empty($response->errors)) throw new Exception('Twitter error: '.$response->errors[0]->message);
+		if (!empty($response->error)) throw new Exception('Twitter error: '.$response->error);
+		if (!is_array($response)) throw new Exception('Twitter response not an error: '.print_r($response, true));
 		
 		// Cache the response
 		if (self::$cache_minutes) Cache::put($cache_id, $response, self::$cache_minutes);
