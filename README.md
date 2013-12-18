@@ -1,46 +1,12 @@
 # BKWLD PHP Library
 
-This is a bundle designed to work with Laravel but it tries to stay independent where possible.
+This is a bundle designed to work with Laravel 4.0 - 4.1, but it tries to stay independent where possible.
 
 ## Contents
 
 * APIs - Reusable components for working with 3rd party APIs like Twitter
 * Laravel - Reusable components designed to work with Laravel
 * Utils - General framework independent utilities
-
-### Laravel 4 refactor status
-
-My plan is to refactor things as I run across dependencies on them in other libraries.
-
-* [ ] Api
-	* [ ] Facebook
-	* [x] Instagram - Just user feed tested
-	* [x] Twitter - Just user feed tested
-	* [ ] Youtube
-* [ ] Laravel
-	* [x] Filters
-		* [x] csrf()
-	* [x] Former
-		* [x] assoc_array_for_radios()
-	* [x] Input
-		* [x] json_or_input()
-		* [x] json_and_input()
-		* [x] remove()
-	* [x] Macros
-	* [ ] Model
-		* [ ] eloquent_to_array()
-		* [ ] ids()
-		* [ ] paginate()
-		* [ ] count()
-	* [x] Validator
-		* [x] unique_with()
-		* [x] require_just_one()
-* [ ] Utils
-	* [x] Collection
-	* [X] Constants
-	* [x] File
-	* [ ] Html
-	* [x] String
 
 ## Installation
 
