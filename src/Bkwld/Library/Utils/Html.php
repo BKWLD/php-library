@@ -1,8 +1,11 @@
 <?php namespace Bkwld\Library\Utils;
 
 // Dependencies
-use Illuminate\Support\Str;
 use BKWLD\Library\APIs\Youtube;
+use Config;
+use Route;
+use Str;
+use View;
 
 // Utilities that assist in the generation of HTML
 class Html {
@@ -22,7 +25,7 @@ class Html {
 		
 		// Render the tags
 		return '<title>'.$title.'</title><meta property="og:title" content="'.$title.'" />';
-	});
+	}
 
 	/**
 	 * Create standard meta and open graph meta tags
@@ -52,7 +55,7 @@ class Html {
 		// Done
 		return $html;
 		
-	});
+	}
 
 	/**
 	 * Add page class to body tag
@@ -71,7 +74,7 @@ class Html {
 			$page = strtolower($matches[1].' '.$matches[2]);
 		}
 		return $page ? "<body class='$page'>" : '<body>';
-	});
+	}
 
 	/**
 	 * Render an HTML tag ONLY if the contents are non-empty
@@ -84,7 +87,7 @@ class Html {
 		if (empty($content)) return '';
 		preg_match('#^\s*(\w+)#', $tag, $matches);
 		return '<'.$tag.'>'.$content.'</'.$matches[1].'>';
-	});
+	}
 	
 	/**
 	 * Make a vimeo iframe embed from a URL to a video.  Options supports the following:
