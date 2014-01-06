@@ -6,6 +6,85 @@ use BKWLD\Library\APIs\Youtube;
 
 // Utilities that assist in the generation of HTML
 class Html {
+
+	/**
+	 * Format title based on section content
+	 */
+	static public function title() {
+		
+		// Get page name
+		$title = View::yieldContent('title');
+		if (empty($title)) $title =  'Camo';
+		
+		// Get the site name
+		$site = Config::get('site.name');
+		if ($site) $title = $site . ' - ' . $title;
+		
+		// Render the tags
+		return '<title>'.$title.'</title><meta property="og:title" content="'.$title.'" />';
+	});
+
+	/**
+	 * Create standard meta and open graph meta tags
+	 */
+	static public function meta() {
+		$html = '';
+		
+		// Merge passed meta data into site config
+		$config = Config::get('site');
+		$meta = View::yieldContent('meta');
+		if (is_array($meta) && is_array($config)) $meta = array_merge($config, $meta);
+		else if (!is_array($meta) && is_array($config)) $meta = $config;
+		else if (!is_array($meta) && !is_array($config)) return;
+		
+		// Add description
+		if (!empty($meta['description'])) {
+			if (!empty($meta['og:description'])) $html .= '<meta name="og:description" content="'.$meta['og:description'].'"/>';
+			else $html .= '<meta name="og:description" content="'.$meta['description'].'"/>';
+			$html .= '<meta name="description" content="'.$meta['description'].'"/>';
+		}
+		
+		// Keywords
+		if (!empty($meta['keywords'])) {
+			$html .= '<meta name="keywords" content="'.$meta['keywords'].'"/>';
+		}
+		
+		// Done
+		return $html;
+		
+	});
+
+	/**
+	 * Add page class to body tag
+	 */
+	static public function body() {
+		$page = View::yieldContent('page');
+		if (!$page && $action = Route::currentRouteAction()) {
+			
+			// Strip restful prefixes and suffices
+			preg_match('#(\w+)Controller@(?:get|post)?(\w+)#i', $action, $matches);
+			
+			// Make an action for missing methods
+			if ($matches[2] == 'missingMethod') $matches[2] = implode(' ', Request::segments());
+			
+			//Combine
+			$page = strtolower($matches[1].' '.$matches[2]);
+		}
+		return $page ? "<body class='$page'>" : '<body>';
+	});
+
+	/**
+	 * Render an HTML tag ONLY if the contents are non-empty
+	 * @param $content The text that goes inside the tag
+	 * @param $tag The tag.  This can include attributes like "div class='farts'".  But 
+	 * don't include the < or >
+	 */
+	static public function tag($content = null, $tag = 'p') {
+		$content = trim($content);
+		if (empty($content)) return '';
+		preg_match('#^\s*(\w+)#', $tag, $matches);
+		return '<'.$tag.'>'.$content.'</'.$matches[1].'>';
+	});
 	
 	/**
 	 * Make a vimeo iframe embed from a URL to a video.  Options supports the following:

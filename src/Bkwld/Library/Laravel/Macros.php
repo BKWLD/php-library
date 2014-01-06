@@ -15,6 +15,10 @@ class Macros {
 	 */
 	public static function register($app) {
 		$html = $app->make('html');
+		$html->macro('title', 'Bkwld\Library\Utils\Html::title');
+		$html->macro('meta', 'Bkwld\Library\Utils\Html::meta');
+		$html->macro('body', 'Bkwld\Library\Utils\Html::body');
+		$html->macro('tag', 'Bkwld\Library\Utils\Html::tag');
 		$html->macro('vimeo', 'Bkwld\Library\Utils\Html::vimeo');
 		$html->macro('youtube', 'Bkwld\Library\Utils\Html::youtube');
 		$html->macro('gravatar', 'Bkwld\Library\Utils\Html::gravatar');
