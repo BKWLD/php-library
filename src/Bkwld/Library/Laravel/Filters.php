@@ -1,7 +1,10 @@
 <?php namespace Bkwld\Library\Laravel;
 
 // Imports
+use App;
+use Config;
 use Response;
+use Redirect;
 use Request;
 use Input;
 use Session;
@@ -32,6 +35,31 @@ class Filters {
 			// Show error screen
 			throw new \Illuminate\Session\TokenMismatchException;
 		}
+	}
+
+	/**
+	 * Require authentication when not live and not local.  For instance,
+	 * when the site is on Pagoda while in development.
+	 * @return  Illuminate\Http\Response | FALSE
+	 */
+	static public function requireDecoyAuthUntilLive() {
+
+		// Require Decoy
+		if (!App::bound('decoy')) return false;
+		
+		// Determine whether redirect should be made
+		if (Config::get('site.live') 
+			|| App::isLocal() 
+			|| app('decoy.auth')->check() 
+			|| app('decoy.filters')->isPublic() 
+			|| Request::is('robots.txt', 'favicon.ico')
+			) return false;
+
+		// Redirect to the decoy login page
+		return Redirect::action(app('decoy.auth')->loginAction())->with(array(
+			'login_notice' => 'Until this site is pushed live, you must authenticate to view the previous URL',
+			'login_redirect' => Request::fullUrl(),
+		));
 	}
 
 }
