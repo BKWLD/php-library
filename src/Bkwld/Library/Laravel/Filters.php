@@ -8,6 +8,7 @@ use Redirect;
 use Request;
 use Input;
 use Session;
+use Str;
 
 class Filters {
 	
@@ -60,6 +61,26 @@ class Filters {
 			'login_notice' => 'Until this site is pushed live, you must authenticate to view the previous URL',
 			'login_redirect' => Request::fullUrl(),
 		));
+	}
+
+	/**
+	 * Return a robots.txt with rules that change depending on whether the site
+	 * is live or not
+	 */
+	static public function conditionalRobots($blacklist = array()) {
+
+		// Add some defaults to the blacklist
+		array_push($blacklist, 'pagoda', '.dev');
+
+		// Assemble robots content
+		$body = "User-agent: *\nDisallow: ";
+		if (Str::contains(Request::getHost(), $blacklist) || !Config::get('site.live')) $body .= "/";
+
+		// Respond as text
+		$response = Response::make($body, '200');
+		$response->header('Content-Type', 'text/plain');
+		return $response;
+
 	}
 
 }
