@@ -83,6 +83,15 @@ class Html {
 	 * don't include the < or >
 	 */
 	static public function tag($content = null, $tag = 'p') {
+
+		// Support arrays for content
+		if (is_array($content)) {
+			$html = '';
+			foreach($content as $instance) $html .= self::tag($instance, $tag);
+			return $html;
+		}
+
+		// Wrap the content in the tag
 		$content = trim($content);
 		if (empty($content)) return '';
 		preg_match('#^\s*(\w+)#', $tag, $matches);
