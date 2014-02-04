@@ -159,6 +159,37 @@ class Html {
 	static public function gravatar($email) {
 		return '//www.gravatar.com/avatar/'.md5(strtolower(trim($email)));
 	}
+	
+	/**
+	 * Check for a file in the dist directory and use it.  It expects a mapping json file
+	 * to be at public/dist/mapping.json
+	 * @param string $path An absolute path like "/js/main.js"
+	 */
+	static public $grunt_mapping;
+	static public function grunt($path) {
+
+		// We've already looked for the mapping file and it didn't exist
+		if (self::$grunt_mapping === false) return $path;
+		
+		// Check if we've already loaded the mapping file
+		$key = substr($path, 1); // The mapping doesn't have leading slashes
+		if (!empty(self::$grunt_mapping)) {
+			if (isset(self::$grunt_mapping->$key)) return self::$grunt_mapping->$key;
+			return $path;
+		}
+		
+		// Load the mapping.json
+		$absolute = File::documentRoot().'/dist/mapping.json';
+		if (!file_exists($absolute)) return $path;
+
+		// Get the key from the newly loaded json
+		self::$grunt_mapping = json_decode(file_get_contents($absolute));
+		if (isset(self::$grunt_mapping->$key)) return self::$grunt_mapping->$key;
+
+		// Though the mapping exists, the key doesn't, so return the path
+		return $path;
+
+	}
 
 	
 }

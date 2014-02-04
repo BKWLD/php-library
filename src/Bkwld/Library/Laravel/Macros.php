@@ -22,6 +22,7 @@ class Macros {
 		$html->macro('vimeo', 'Bkwld\Library\Utils\Html::vimeo');
 		$html->macro('youtube', 'Bkwld\Library\Utils\Html::youtube');
 		$html->macro('gravatar', 'Bkwld\Library\Utils\Html::gravatar');
+		$html->macro('grunt', 'Bkwld\Library\Utils\Html::grunt');
 	}
 	
 }
