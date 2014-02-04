@@ -133,15 +133,22 @@ class File {
 	static public function publicPath($path) {
 		
 		// Require a DOCUMENT_ROOT.  It could be missing when executed from the command line
-		if (function_exists('public_path')) $public_path = public_path();
-		else if (!empty($_SERVER['DOCUMENT_ROOT'])) $public_path = $_SERVER['DOCUMENT_ROOT'];
-		else throw new \Exception('DOCUMENT_ROOT not defined');
+		$document_root = File::documentRoot();
 		
 		// If document root isn't in the path, this probably isn't an absolute path
-		if (strpos($path, $public_path) === false) return $path;
+		if (strpos($path, $document_root) === false) return $path;
 		
 		// Remove the document root from the string
-		return str_replace($public_path, '', $path);
+		return str_replace($document_root, '', $path);
+	}
+
+	/**
+	 * Get the document root.  No trailing slash.
+	 */
+	public static function documentRoot() {
+		if (function_exists('public_path')) return public_path();
+		else if (!empty($_SERVER['DOCUMENT_ROOT'])) return $_SERVER['DOCUMENT_ROOT'];
+		else throw new \Exception('DOCUMENT_ROOT not defined');
 	}
 	
 	/**
