@@ -174,7 +174,7 @@ class Html {
 		// Check if we've already loaded the mapping file
 		$key = substr($path, 1); // The mapping doesn't have leading slashes
 		if (!empty(self::$grunt_mapping)) {
-			if (isset(self::$grunt_mapping->$key)) return self::$grunt_mapping->$key;
+			if (isset(self::$grunt_mapping->$key)) return '/'.self::$grunt_mapping->$key;
 			return $path;
 		}
 		
@@ -184,7 +184,7 @@ class Html {
 
 		// Get the key from the newly loaded json
 		self::$grunt_mapping = json_decode(file_get_contents($absolute));
-		if (isset(self::$grunt_mapping->$key)) return self::$grunt_mapping->$key;
+		if (isset(self::$grunt_mapping->$key)) return '/'.self::$grunt_mapping->$key;
 
 		// Though the mapping exists, the key doesn't, so return the path
 		return $path;
