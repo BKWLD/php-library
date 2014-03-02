@@ -7,23 +7,6 @@ use Kwi\UrlLinker;
 
 // Utilities for dealing with strings
 class String {
-
-	/**
-	 * Convert a key / slug into a friendly title string
-	 * @param string $keyword i.e. "some_multi_key"
-	 * @return string i.e. "Some multi key"
-	 */
-	static public function titleFromKey($keyword) {
-		
-		// Check for the keyword in Laravel's translation system
-		if (class_exists('Lang')) {
-			if (Lang::has('admin.'.$keyword)) return Lang::get('admin.'.$keyword);
-			if (Lang::has('application.'.$keyword)) return Lang::get('app.'.$keyword);
-		}
-		
-		// Otherwise, auto format it
-		return ucfirst(str_replace('_', ' ', $keyword));
-	}
 	
 	/**
 	 * Add HTML links to URLs in a string.  This loads a vendor PHP
@@ -43,6 +26,15 @@ class String {
 		// Generate the link
 		$url_linker = new UrlLinker;
 		return $url_linker->parse($text, $options);
+	}
+
+	/**
+	 * Replace the last whitespace in a string in a string with a &nbsp; to prevent orphans.
+	 * Essentially makes the last two words wrap together.  Regexp inspired by:
+	 * http://frightanic.wordpress.com/2007/06/08/regex-match-last-occurrence/
+	 */
+	static public function noOrphan($text) {
+		return preg_replace('#\s+(?!.*\s)#', '&nbsp;', $text);
 	}
 
 	/**
@@ -86,6 +78,23 @@ class String {
 				else return $r .($options['spacing']?' ':''). $str;
 			}
 		}
+	}
+
+	/**
+	 * Convert a key / slug into a friendly title string
+	 * @param string $keyword i.e. "some_multi_key"
+	 * @return string i.e. "Some multi key"
+	 */
+	static public function titleFromKey($keyword) {
+		
+		// Check for the keyword in Laravel's translation system
+		if (class_exists('Lang')) {
+			if (Lang::has('admin.'.$keyword)) return Lang::get('admin.'.$keyword);
+			if (Lang::has('application.'.$keyword)) return Lang::get('app.'.$keyword);
+		}
+		
+		// Otherwise, auto format it
+		return ucfirst(str_replace('_', ' ', $keyword));
 	}
 	
 	/**
