@@ -34,7 +34,7 @@ class String {
 	 * http://frightanic.wordpress.com/2007/06/08/regex-match-last-occurrence/
 	 */
 	static public function noOrphan($text) {
-		if (substr_count($text, ' ') < 2) return $text; // Require > 3 words
+		if (substr_count($text, ' ') < 3) return $text; // Require > 3 words
 		return preg_replace('#\s+(?!.*\s)#', '&nbsp;', $text);
 	}
 
