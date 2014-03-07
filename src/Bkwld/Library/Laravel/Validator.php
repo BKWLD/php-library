@@ -61,7 +61,8 @@ class Validator {
 	 */
 	public function file($attribute, $value, $parameters) {
 		if ($value instanceof File && $value->getPath() != '') return true;
-		if (is_file(public_path().$value)) return true;
+		if (is_array($value) && is_file(public_path().$value[0])) return true; // How replaced files look
+		if (is_string($value) && is_file(public_path().$value)) return true;
 		return false;
 	}
 	
