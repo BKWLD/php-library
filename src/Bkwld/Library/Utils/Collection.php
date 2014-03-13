@@ -13,11 +13,12 @@ class Collection {
 	}
 	
 	/**
-	 * Replace all the empty strings in an array with NULL
+	 * Replace all the empty strings in an array with NULL.  An empty string
+	 * excludes numeric 0.
 	 */
 	static public function nullEmpties($ar) {
 		foreach($ar as &$val) {
-			if (empty($val)) $val = null;
+			if (!isset($val) || $val === '' || $val === false || $val == array()) $val = null;
 		}
 		return $ar;
 	}
