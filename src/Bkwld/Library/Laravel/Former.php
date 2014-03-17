@@ -57,7 +57,7 @@ class Former {
 	 *
 	 * public function onSaving() {
 	 * 	if (is_array($this->status)) {
-	 * 		$this->status = implode(',', array_filter($this->status));
+	 * 		$this->status = implode(',', $this->status);
 	 * 	}
 	 * }
 	 * 
