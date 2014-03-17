@@ -60,6 +60,12 @@ class Former {
 	 * 		$this->status = implode(',', array_filter($this->status));
 	 * 	}
 	 * }
+	 * 
+	 * NOTE: You will need to set `push(false)` on the checkbox to stop hidden
+	 * fields from confusing the repopulation of the form on error.  Otherwise,
+	 * something like this happens: http://cl.ly/image/3l1D32021q2I.  In addition
+	 * you need to use this patch to Former that is currently waiting to be merged:
+	 * https://github.com/Anahkiasen/former/pull/286
 	 *
 	 * @param  string $name The name of the form element (i.e. "status")
 	 * @param  array $src An associative array
