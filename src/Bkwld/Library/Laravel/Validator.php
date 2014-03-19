@@ -1,6 +1,7 @@
 <?php namespace Bkwld\Library\Laravel;
 
 // Dependencies
+use DB;
 use Exception;
 use Input;
 use Redirect;
