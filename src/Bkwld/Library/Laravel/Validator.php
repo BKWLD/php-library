@@ -12,8 +12,11 @@ class Validator {
 	
 	/**
 	 * Is like the unique validator but tests multiple columns.  All columns
-	 * must be the same for the validation to fail.  Note, it
-	 * looks for the values of the other referenced column from Input::get()
+	 * must be the same for the validation to fail.
+	 * 
+	 * Note: It looks for the values of the other referenced column from Input::get()
+	 * Note: If useing with Decoy slugs, don't forget that foreign keys unique-where
+	 *   clauses are added for free by Bkwld\Decoy\Input\Slug
 	 * 
 	 * Params:
 	 * - Table name
