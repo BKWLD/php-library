@@ -73,7 +73,10 @@ class Html {
 			//Combine
 			$page = strtolower($matches[1].' '.$matches[2]);
 		}
-		return $page ? "<body class='$page'>" : '<body>';
+
+		// The ontouchstart fixes issues with active state on iOS
+		// http://stackoverflow.com/a/8877902/59160
+		return $page ? "<body class='$page' ontouchstart=''>" : '<body>';
 	}
 
 	/**
