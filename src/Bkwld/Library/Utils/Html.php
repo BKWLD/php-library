@@ -14,14 +14,16 @@ class Html {
 	 * Format title based on section content
 	 */
 	static public function title() {
-		
+
 		// Get page name
 		$title = View::yieldContent('title');
-		if (empty($title)) $title =  'Camo';
 		
 		// Get the site name
 		$site = Config::get('site.name');
-		if ($site) $title = $site . ' - ' . $title;
+
+		// Make the title
+		if ($site && $title) $title = $site . ' - ' . $title;
+		else if ($site) $title = $site;
 		
 		// Render the tags
 		return '<title>'.$title.'</title><meta property="og:title" content="'.$title.'" />';
