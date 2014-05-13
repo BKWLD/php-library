@@ -34,27 +34,33 @@ class Html {
 	 */
 	static public function meta() {
 		$html = '';
-		
+
+		// Get general site config values that have valid keys for meta tags		
+		$config = array_intersect_key(Config::get('site'), array_flip(array(
+			'og:title', 
+			'description', 
+			'og:description',
+			'og:image',
+		)));
+
+		// Use site name for the og:title
+		if (Config::has('site.name') && empty($config['og:title'])) $config['og:title'] = Config::get('site.name');
+
 		// Merge passed meta data into site config
-		$config = Config::get('site');
 		$meta = View::yieldContent('meta');
 		if (is_array($meta) && is_array($config)) $meta = array_merge($config, $meta);
 		else if (!is_array($meta) && is_array($config)) $meta = $config;
 		else if (!is_array($meta) && !is_array($config)) return;
 		
-		// Add description
-		if (!empty($meta['description'])) {
-			if (!empty($meta['og:description'])) $html .= '<meta name="og:description" content="'.$meta['og:description'].'"/>';
-			else $html .= '<meta name="og:description" content="'.$meta['description'].'"/>';
-			$html .= '<meta name="description" content="'.$meta['description'].'"/>';
+		// Make an explicit og:description if not defined because that makes the 
+		// Facebook linter happy.
+		if (!empty($meta['description']) && empty($meta['og:description'])) {
+			$meta['og:description'] = $meta['description'];
 		}
 		
-		// Keywords
-		if (!empty($meta['keywords'])) {
-			$html .= '<meta name="keywords" content="'.$meta['keywords'].'"/>';
-		}
-		
-		// Done
+		// Create all tags
+		$html = '';
+		foreach($meta as $key => $val) $html .= "<meta name='$key' content='$val'/>";
 		return $html;
 		
 	}
