@@ -26,7 +26,7 @@ class Html {
 		else if ($site) $title = $site;
 		
 		// Render the tags
-		return '<title>'.$title.'</title><meta property="og:title" content="'.$title.'" />';
+		return '<title>'.$title.'</title>';
 	}
 
 	/**
