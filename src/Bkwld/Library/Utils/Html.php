@@ -83,6 +83,9 @@ class Html {
 			$class = Str::snake($matches[1], '-').' '.Str::snake($matches[2], '-');
 		}
 
+		// Add any extra classes on
+		$class .= ' '.View::yieldContent('append to body');
+
 		// The ontouchstart fixes issues with active state on iOS
 		// http://stackoverflow.com/a/8877902/59160
 		return $class ? "<body class='$class' ontouchstart=''>" : '<body>';
