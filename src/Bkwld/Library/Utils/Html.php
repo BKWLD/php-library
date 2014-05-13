@@ -63,8 +63,15 @@ class Html {
 	 * Add page class to body tag
 	 */
 	static public function body() {
-		$page = View::yieldContent('page');
-		if (!$page && $action = Route::currentRouteAction()) {
+
+		// See if the class has already been defined
+		$class = View::yieldContent('page');
+
+		// "page is deprecated", use "body" instead, if it's defined
+		if ($body = View::yieldContent('body')) $class = $body;
+
+		// If no class was defined, deduce it
+		if (!$class && $action = Route::currentRouteAction()) {
 			
 			// Strip restful prefixes and suffices
 			preg_match('#(\w+)Controller@(?:get|post)?(\w+)#i', $action, $matches);
@@ -73,12 +80,12 @@ class Html {
 			if ($matches[2] == 'missingMethod') $matches[2] = implode(' ', Request::segments());
 			
 			//Combine
-			$page = strtolower($matches[1].' '.$matches[2]);
+			$class = Str::snake($matches[1], '-').' '.Str::snake($matches[2], '-');
 		}
 
 		// The ontouchstart fixes issues with active state on iOS
 		// http://stackoverflow.com/a/8877902/59160
-		return $page ? "<body class='$page' ontouchstart=''>" : '<body>';
+		return $class ? "<body class='$class' ontouchstart=''>" : '<body>';
 	}
 
 	/**
