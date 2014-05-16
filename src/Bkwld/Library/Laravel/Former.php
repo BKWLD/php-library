@@ -28,12 +28,24 @@ class Former {
 	 * )
 	 *
 	 * @param  array $src An associative array
+	 * @param  array $options Config options, read source code for documentation
 	 * @return array A multidimensional array like Former expects
 	 */
-	static public function radioArray($src) {
+	static public function radioArray($src, $options = array()) {
+
+		// Set default options
+		$options = array_merge(array(
+			'select_first' => true, // Auto select/check the first radio
+		), $options);
+
+		// Massage the source array into what Former wants
 		$out = array();
 		foreach($src as $key => $val) {
-			if (!count($out)) $out[$val] = array('value' => $key, 'checked' => true);
+
+			// Check the first radio automatically
+			if ($options['select_first'] && !count($out)) $out[$val] = array('value' => $key, 'checked' => true);
+
+			// Add a normal radio button
 			else $out[$val] = array('value' => $key);
 		}
 		return $out;
