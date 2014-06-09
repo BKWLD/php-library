@@ -16,7 +16,7 @@ class Tags {
 	/**
 	 * Search for the provided tag and return the results via JSON
 	 */
-	static public function rolling_search($tag) {
+	static public function rollingSearch($tag) {
 		
 		// Find out when the last image we added was posted
 		$min_tag_id = Cache::get(self::CACHE_ID.$tag, 0);
@@ -31,7 +31,7 @@ class Tags {
 		
 		// Fetch the recent photos from instagram
 		$query = new self;
-		$min_tag_id = $query->fetch_page($url);
+		$min_tag_id = $query->fetchPage($url);
 		$results = $query->results();
 		unset($query);
 		
@@ -49,10 +49,10 @@ class Tags {
 	 * Act on a specific incoming tag
 	 */
 	private $pages_returned = 0;
-	private function fetch_page($url) {
+	private function fetchPage($url) {
 		
 		// Ask instagram for all images since then.
-		Log::info('Executing: '.$url);
+		Log::debug('Executing: '.$url);
 		$ch = curl_init($url);
 		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 		if (!($response = curl_exec($ch))) throw new Exception('Tag/media/recent could not be executed');
@@ -73,7 +73,7 @@ class Tags {
 		if ($this->pages_returned < self::MAX_PAGES_PARSED 
 			&& isset($response->pagination) 
 			&& !empty($response->pagination->next_url)) {
-			$this->fetch_page($response->pagination->next_url);
+			$this->fetchPage($response->pagination->next_url);
 		}
 		
 		// Return the new min tag-id.  There will always be a min_tag_id returned:
