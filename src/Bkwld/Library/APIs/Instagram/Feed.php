@@ -16,7 +16,7 @@ class Feed {
 	public static $cache_minutes = 10;
 
 	/**
-	 * Load a feed from an open graph resource
+	 * Load a feed from a specic user by their id
 	 * @param $id - An instagram user id
 	 * @param $options - An array that gets merged with the defaults
 	 */
