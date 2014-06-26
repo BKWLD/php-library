@@ -61,6 +61,7 @@ class Html {
 		// Create all tags
 		$html = '';
 		foreach($meta as $key => $val) {
+			$val = htmlspecialchars($val, ENT_QUOTES);
 			if (strpos($key, 'og:') === 0) $html .= "<meta property='$key' content='$val' />";
 			else $html .= "<meta name='$key' content='$val' />";
 		}
