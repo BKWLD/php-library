@@ -49,7 +49,7 @@ class Filters {
 		if (!App::bound('decoy')) return false;
 		
 		// Determine whether redirect should be made
-		if (Config::get('site.live') 
+		if ((Config::get('site.live') && App::environment() == 'production')
 			|| App::isLocal() 
 			|| app('decoy.auth')->check() 
 			|| app('decoy.filters')->isPublic() 
