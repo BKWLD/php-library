@@ -110,7 +110,7 @@ class File {
 		chmod($path, 0664);
 		
 		// Return the final path
-		return realpath($path);
+		return $path;
 	}
 	
 	/**
@@ -193,7 +193,6 @@ class File {
 	 * @param $string src The server path to an image
 	 */
 	static public function image($src) {
-		$src = realpath($src);
 
 		// Set headers
 		header("Content-Transfer-Encoding: binary");
