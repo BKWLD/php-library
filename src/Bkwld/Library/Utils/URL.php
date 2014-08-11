@@ -37,5 +37,16 @@ class URL {
 		if (!empty($parts['fragment'])) $url .= '#'.$parts['fragment'];
 		return $url;
 	}
+	
+	/**
+	 * Stripping the current domain (and protocol) from a URL
+	 * @param string $url
+	 * @return string
+	 */
+	public static function urlToAbsolutePath($url, $host = null) {
+		if (!$host && function_exists('app')) $host = app('request')->getHost();
+		else if (!$host) $host = $_SERVER['SERVER_NAME'];
+		return preg_replace('#^[^/]*//(www\.)?'.str_replace('www.', '', preg_quote($host)).'#', '', $url);
+	}
 
 }
