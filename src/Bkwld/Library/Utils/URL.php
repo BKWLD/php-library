@@ -9,6 +9,7 @@ class URL {
 	 * Remove a query parameter from a URL
 	 * @param string $url 
 	 * @param string $key
+	 * @return string The URL without the query parameter
 	 */
 	public static function unsetParam($url, $key) {
 		$parts = parse_url($url);
@@ -22,6 +23,7 @@ class URL {
 	/**
 	 * Build a URL, using an array like parse_url returns
 	 * @param array $parts
+	 * @return string
 	 */
 	public static function buildUrl($parts) {
 		$url = $parts['scheme'].'://';
