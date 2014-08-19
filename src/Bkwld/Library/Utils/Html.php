@@ -91,6 +91,10 @@ class Html {
 			
 			//Combine
 			$class = Str::snake($matches[1], '-').' '.Str::snake($matches[2], '-');
+
+		// If not using a controller, see if there is a named route to use
+		} elseif (!$class && $route = Route::currentRouteName()) {
+			$class = $route;
 		}
 
 		// Add any extra classes on
