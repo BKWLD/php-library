@@ -9,6 +9,20 @@ use Kwi\UrlLinker;
 class String {
 	
 	/**
+	 * Convert a size in bytes to human readable
+	 * http://php.net/manual/en/function.filesize.php#106569
+	 * 
+	 * @param  int  $bytes    
+	 * @param  int $decimals 
+	 * @return string
+	 */
+	private function humanSize($bytes, $decimals = 2) {
+		$sz = 'BKMGTP';
+		$factor = floor((strlen($bytes) - 1) / 3);
+		return sprintf("%.{$decimals}f", $bytes / pow(1024, $factor)) . @$sz[$factor];
+	}
+	
+	/**
 	 * Add HTML links to URLs in a string.  This loads a vendor PHP
 	 * file into this function because it registers global functions
 	 * that I don't want in the global space
