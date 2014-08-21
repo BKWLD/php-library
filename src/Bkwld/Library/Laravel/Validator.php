@@ -69,49 +69,5 @@ class Validator {
 		if (is_string($value) && is_file(public_path().$value)) return true;
 		return false;
 	}
-	
-	/**
-	 * To succeed, all but one of the referenced fields must be empty.  In other words, one and only one field must
-	 * have a value.  This isn't desigened to be run through the validator (I couldn't get it to work that way)
-	 * @param $fields An array containing the field names to check
-	 * @param $input An associateive array of ht einput to check
-	 * 
-	 * Example: (this would be put in a Decoy model)
-	 * public function validating($input) {
-	 *	if ($response = Bkwld\Library\Laravel\Validator::requireJustOne(array('image', 'vimeo_url'), $input)) return $response;
-	 *	parent::validating($input);
-	 * }
-	 * 
-	 */
-	static public function requireJustOne($fields, $input = null) {
-		
-		// Input is optional
-		if (empty($input)) $input == Input::get();
-		
-		// You must specify additional columns
-		if (count($fields) <= 1) throw new Exception('Multiple fields must be specified');
-		
-		// Check for each parameter in the input
-		$found = 0;
-		foreach($fields as $field) {
-			
-			// Test if a file
-			if (!empty($input[$field]['tmp_name'])) $found++;
-			
-			// Test if a normal field
-			if (!empty($input[$field]) && !isset($input[$field]['tmp_name'])) $found++;
-		}
-		
-		// If only one field has data, we're good.  Return false to indicate there is no error
-		if ($found === 1) return false;
 
-		// Otherwise, return a redirect response with the error
-		$titles = array_map('\BKWLD\Utils\String::title_from_key', $fields);
-		$message = 'You must specify <strong>exactly one</strong> of the following fields: '.implode(', ', $titles);
-		$errors = array();
-		foreach($fields as $field) { $errors[$field] = $message; }
-		return Redirect::to(URL::current())
-			->withErrors($errors)
-			->withInput();
-	}
 }
