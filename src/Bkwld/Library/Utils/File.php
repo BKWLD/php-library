@@ -4,6 +4,18 @@
 class File {
 	
 	/**
+	 * Get the max upload size
+	 * @return  int Max upload size in bytes
+	 */
+	static public function maxUpload() {
+		return min(
+			String::bytesFromHuman(ini_get('post_max_size')),
+			String::bytesFromHuman(ini_get('upload_max_filesize')),
+			String::bytesFromHuman(ini_get('memory_limit'))
+		);
+	}
+
+	/**
 	 * Moves a file from it's currently location to a new destination, being 
 	 * careful to not overwrite anything there.  Only for uploaded files
 	 * @param string $src Path to the current file
