@@ -9,6 +9,24 @@ use Kwi\UrlLinker;
 class String {
 	
 	/**
+	 * Get the bytes from a PHP human-size style string
+	 * http://stackoverflow.com/a/4177462/59160
+	 *
+	 * @param  string $val 
+	 * @return int 
+	 */
+	static public function bytesFromHuman($val) {
+		$val = trim($val);
+		$last = strtolower($val[strlen($val)-1]);
+		switch($last) {
+			case 'g': $val *= 1024;
+			case 'm': $val *= 1024;
+			case 'k': $val *= 1024;
+		}
+		return $val;
+	}
+
+	/**
 	 * Convert a size in bytes to human readable
 	 * http://php.net/manual/en/function.filesize.php#106569
 	 * 
