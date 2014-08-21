@@ -70,4 +70,40 @@ class Validator {
 		return false;
 	}
 
+	/**
+	 * Test if a the field has a file or references a valid file path
+	 *
+	 * @param  string  $attribute
+	 * @param  array   $value
+	 * @param  array   $parameters
+	 * @return bool
+	 */
+	public function video($attribute, $value, $parameters) {
+		return $this->validateMimes($attribute, $value, array('avi', 'mov', 'mp4', 'ogg', 'vob', 'wbm', 'qt'));
+	}
+
+	/**
+	 * Validate the MIME type of a file upload attribute is in a set of MIME types.
+	 * Note: This is cribbed from Illuminate\Validation\Validator
+	 *
+	 * @param  string  $attribute
+	 * @param  array   $value
+	 * @param  array   $parameters
+	 * @return bool
+	 */
+	protected function validateMimes($attribute, $value, $parameters) {
+		if ( ! $value instanceof File) {
+			return false;
+		}
+
+		// The Symfony File class should do a decent job of guessing the extension
+		// based on the true MIME type so we'll just loop through the array of
+		// extensions and compare it to the guessed extension of the files.
+		if ($value->isValid() && $value->getPath() != '') {
+			return in_array($value->guessExtension(), $parameters);
+		} else {
+			return false;
+		}
+	}
+	
 }

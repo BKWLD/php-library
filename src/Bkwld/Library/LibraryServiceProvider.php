@@ -30,6 +30,7 @@ class LibraryServiceProvider extends ServiceProvider {
 		$validator = $this->app->make('validator');
 		$validator->extend('unique_with', 'Bkwld\Library\Laravel\Validator@uniqueWith');
 		$validator->extend('file', 'Bkwld\Library\Laravel\Validator@file');
+		$validator->extend('video', 'Bkwld\Library\Laravel\Validator@video');
 		
 		// Instagram access token helper
 		$view = $this->app->make('view');
