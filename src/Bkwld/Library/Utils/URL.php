@@ -6,6 +6,27 @@
 class URL {
 
 	/**
+	 * Return a target="_blank" only if a url is external
+	 *
+	 * @param string $url
+	 * @param string $host
+	 * @return string
+	 */
+	public static function autoTarget($url, $host = null) {
+
+		// If URL doesn't begin with http, then just return it
+		if (!preg_match('#^http#', $url)) return '_self';
+
+		// Determine the current host
+		if (!$host && function_exists('app')) $host = app('request')->getHost();
+		else if (!$host) $host = $_SERVER['SERVER_NAME'];
+
+		// If the host is in the URL, self, otherwise blank
+		if (preg_match('#'.preg_quote($host).'#', $url)) return '_self';
+		else return '_blank';
+	}
+
+	/**
 	 * Remove a query parameter from a URL
 	 * @param string $url 
 	 * @param string $key
@@ -40,7 +61,9 @@ class URL {
 	
 	/**
 	 * Stripping the current domain (and protocol) from a URL
+	 * 
 	 * @param string $url
+	 * @param string $host
 	 * @return string
 	 */
 	public static function urlToAbsolutePath($url, $host = null) {
