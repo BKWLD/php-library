@@ -100,13 +100,7 @@ class Validator {
 		// based on the true MIME type so we'll just loop through the array of
 		// extensions and compare it to the guessed extension of the files.
 		if ($value->isValid() && $value->getPath() != '') {
-			return in_array($value->guessExtension(), $parameters) 
-
-				// If the extension couldn't be guessed, just compare the suffix.  This 
-				// compromises the above many web servers don't know the proper mimetypes
-				// of video files.
-				|| in_array($value->getExtension(), $parameters);
-
+			return in_array($value->guessExtension(), $parameters);
 		} else {
 			return false;
 		}
