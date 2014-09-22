@@ -209,25 +209,25 @@ class File {
 		// Set headers
 		header("Content-Transfer-Encoding: binary");
 		header("Accept-Ranges: bytes");
-    header("Content-Length: ".filesize($src));
-    
-    // Set the content type using file extenions
-    switch(strtolower(pathinfo($src, PATHINFO_EXTENSION))) {
-    	case 'jpg':
-    	case 'jpeg':
-    		header('Content-type: image/jpeg');
-    		break;
-    	case 'gif':
-    		header('Content-type: image/gif');
-    		break;
-    	case 'png':
-    		header('Content-type: image/png'); 
-    		break;
-    	default: throw new Exception('Unknown file extension');
-    }
-    
-    // Output file
-    readfile($src);
+		header("Content-Length: ".filesize($src));
+		
+		// Set the content type using file extenions
+		switch(strtolower(pathinfo($src, PATHINFO_EXTENSION))) {
+			case 'jpg':
+			case 'jpeg':
+				header('Content-type: image/jpeg');
+				break;
+			case 'gif':
+				header('Content-type: image/gif');
+				break;
+			case 'png':
+				header('Content-type: image/png'); 
+				break;
+			default: throw new Exception('Unknown file extension');
+		}
+		
+		// Output file
+		readfile($src);
 		die;
 		
 	}
