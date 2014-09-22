@@ -99,9 +99,11 @@ class Validator {
 		// The Symfony File class should do a decent job of guessing the extension
 		// based on the true MIME type so we'll just loop through the array of
 		// extensions and compare it to the guessed extension of the files.
+		$ext = $value->guessExtension();
 		if ($value->isValid() && $value->getPath() != '') {
-			return in_array($value->guessExtension(), $parameters);
+			return in_array($ext, $parameters);
 		} else {
+			if (class_exists('\Log')) \Log::info('Failed ext was: '.$ext);
 			return false;
 		}
 	}
