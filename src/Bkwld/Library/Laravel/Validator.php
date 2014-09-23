@@ -92,6 +92,7 @@ class Validator {
 	 * @return bool
 	 */
 	protected function validateMimes($attribute, $value, $parameters) {
+		\Log::info(print_r($value,1));
 		if ( ! $value instanceof File) {
 			return false;
 		}
@@ -100,10 +101,10 @@ class Validator {
 		// based on the true MIME type so we'll just loop through the array of
 		// extensions and compare it to the guessed extension of the files.
 		$ext = $value->guessExtension();
+		\Log::info('Failed ext was: '.$ext);
 		if ($value->isValid() && $value->getPath() != '') {
 			return in_array($ext, $parameters);
 		} else {
-			\Log::info('Failed ext was: '.$ext);
 			return false;
 		}
 	}
