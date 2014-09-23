@@ -103,7 +103,7 @@ class Validator {
 		if ($value->isValid() && $value->getPath() != '') {
 			return in_array($ext, $parameters);
 		} else {
-			if (class_exists('\Log')) \Log::info('Failed ext was: '.$ext);
+			\Log::info('Failed ext was: '.$ext);
 			return false;
 		}
 	}
