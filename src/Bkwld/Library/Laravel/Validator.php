@@ -79,7 +79,14 @@ class Validator {
 	 * @return bool
 	 */
 	public function video($attribute, $value, $parameters) {
-		return $this->validateMimes($attribute, $value, array('avi', 'mov', 'mp4', 'ogg', 'vob', 'wbm', 'qt'));
+		return $this->validateMimes($attribute, $value, array(
+
+			// Normal extensions
+			'avi', 'mov', 'mp4', 'ogg', 'vob', 'wbm', 'qt', 
+
+			// Odd ones because servers often fail at detecting video file types 
+			'bin',
+		));
 	}
 
 	/**
@@ -92,7 +99,6 @@ class Validator {
 	 * @return bool
 	 */
 	protected function validateMimes($attribute, $value, $parameters) {
-		\Log::info(print_r($value,1));
 		if ( ! $value instanceof File) {
 			return false;
 		}
@@ -101,7 +107,6 @@ class Validator {
 		// based on the true MIME type so we'll just loop through the array of
 		// extensions and compare it to the guessed extension of the files.
 		$ext = $value->guessExtension();
-		\Log::info('Failed ext was: '.$ext);
 		if ($value->isValid() && $value->getPath() != '') {
 			return in_array($ext, $parameters);
 		} else {
