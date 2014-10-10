@@ -209,27 +209,61 @@ class File {
 		// Set headers
 		header("Content-Transfer-Encoding: binary");
 		header("Accept-Ranges: bytes");
-    header("Content-Length: ".filesize($src));
-    
-    // Set the content type using file extenions
-    switch(strtolower(pathinfo($src, PATHINFO_EXTENSION))) {
-    	case 'jpg':
-    	case 'jpeg':
-    		header('Content-type: image/jpeg');
-    		break;
-    	case 'gif':
-    		header('Content-type: image/gif');
-    		break;
-    	case 'png':
-    		header('Content-type: image/png'); 
-    		break;
-    	default: throw new Exception('Unknown file extension');
-    }
-    
-    // Output file
-    readfile($src);
+		header("Content-Length: ".filesize($src));
+		
+		// Set the content type using file extenions
+		switch(strtolower(pathinfo($src, PATHINFO_EXTENSION))) {
+			case 'jpg':
+			case 'jpeg':
+				header('Content-type: image/jpeg');
+				break;
+			case 'gif':
+				header('Content-type: image/gif');
+				break;
+			case 'png':
+				header('Content-type: image/png'); 
+				break;
+			default: throw new Exception('Unknown file extension');
+		}
+		
+		// Output file
+		readfile($src);
 		die;
 		
+	}
+
+	/**
+	 * Recursively delete a directory and all of it's contents - e.g.the equivalent of `rm -r` on the command-line.
+	 * Consistent with `rmdir()` and `unlink()`, an E_WARNING level error will be generated on failure.
+	 * https://gist.github.com/mindplay-dk/a4aad91f5a4f1283a5e2
+	 * http://stackoverflow.com/a/3352564/283851
+	 *
+	 * @param string $dir absolute path to directory to delete
+	 * @return bool true on success; false on failure
+	 */
+	static public function deleteDir($dir) {
+		
+		// Build the iterator
+		$files = new \RecursiveIteratorIterator(
+			new \RecursiveDirectoryIterator($dir, \RecursiveDirectoryIterator::SKIP_DOTS),
+			\RecursiveIteratorIterator::CHILD_FIRST
+		);
+		
+		// Loop through iterator and delete
+		foreach ($files as $fileinfo) {
+			if ($fileinfo->isDir()) {
+				if (false === rmdir($fileinfo->getRealPath())) {
+					return false;
+				}
+			} else {
+				if (false === unlink($fileinfo->getRealPath())) {
+					return false;
+				}
+			}
+		}
+
+		// Remove dir and return
+		return rmdir($dir);
 	}
 	
 }

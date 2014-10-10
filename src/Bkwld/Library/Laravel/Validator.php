@@ -79,7 +79,14 @@ class Validator {
 	 * @return bool
 	 */
 	public function video($attribute, $value, $parameters) {
-		return $this->validateMimes($attribute, $value, array('avi', 'mov', 'mp4', 'ogg', 'vob', 'wbm', 'qt'));
+		return $this->validateMimes($attribute, $value, array(
+
+			// Normal extensions
+			'avi', 'mov', 'mp4', 'ogg', 'vob', 'wbm', 'qt', 
+
+			// Odd ones because servers often fail at detecting video file types 
+			'bin',
+		));
 	}
 
 	/**
@@ -99,8 +106,9 @@ class Validator {
 		// The Symfony File class should do a decent job of guessing the extension
 		// based on the true MIME type so we'll just loop through the array of
 		// extensions and compare it to the guessed extension of the files.
+		$ext = $value->guessExtension();
 		if ($value->isValid() && $value->getPath() != '') {
-			return in_array($value->guessExtension(), $parameters);
+			return in_array($ext, $parameters);
 		} else {
 			return false;
 		}
