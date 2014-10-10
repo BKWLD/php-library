@@ -53,7 +53,7 @@ class URL {
 		if (!empty($parts['user'])) $url .= '@';
 		$url .= $parts['host'];
 		if (!empty($parts['port']) && $parts['port'] != 80) $url .= ':80';
-		$url .= $parts['path'];
+		if (!empty($parts['path'])) $url .= $parts['path'];
 		if (!empty($parts['query'])) $url .= '?'.$parts['query'];
 		if (!empty($parts['fragment'])) $url .= '#'.$parts['fragment'];
 		return $url;
