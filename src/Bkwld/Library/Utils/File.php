@@ -5,6 +5,7 @@ class File {
 	
 	/**
 	 * Get the max upload size
+	 * 
 	 * @return  int Max upload size in bytes
 	 */
 	static public function maxUpload() {
@@ -16,20 +17,30 @@ class File {
 	}
 
 	/**
-	 * Moves a file from it's currently location to a new destination, being 
-	 * careful to not overwrite anything there.  Only for uploaded files
+	 * Same as moveFileUniquely() but for uploaded files
+	 * 
 	 * @param string $src Path to the current file
 	 * @param string $dst Path to where you want it go
 	 * @return mixed New path or false on error
 	 */
 	static public function moveUploadedFileUniquely($src, $dst) {
-		
-		// Make sure it's an uploaded file
 		if (!is_uploaded_file($src)) return false;
+		return static::moveFileUniquely($src, $dst);
+	}
+
+	/**
+	 * Moves a file from it's currently location to a new destination, being 
+	 * careful to not overwrite anything there.
+	 * 
+	 * @param string $src Path to the current file
+	 * @param string $dst Path to where you want it go
+	 * @return mixed New path or false on error
+	 */
+	static public function moveFileUniquely($src, $dst) {
 		
 		// The file doesn't exist, so straight move it
 		if (!file_exists($dst)) {
-			move_uploaded_file($src, $dst);
+			rename($src, $dst);
 			return $dst;
 		}
 		
@@ -43,7 +54,7 @@ class File {
 		}
 		
 		// Move the file and return the new path
-		move_uploaded_file($src, $dst);
+		rename($src, $dst);
 		return $dst;
 		
 	}
@@ -52,6 +63,7 @@ class File {
 	 * Create a number of subdirectories witihin the provided folder. This
 	 * is done to get around filesystem limitations when you create too many
 	 * files in a given directory.  Also makes FTP and SSH listings faster.
+	 * 
 	 * @param string $dir The directory to create sub directories in 
 	 * @param number $depth How deep to make them
 	 * @param number $length How many to make per depth
@@ -79,14 +91,27 @@ class File {
 	}
 	
 	/**
-	 * Combine a bunch of comon operations on uploaded files into a single
-	 * command: Simplify the filename, make it unique, and store it in a nested
-	 * directory
+	 * Same as organizeFile but checks that the src has been uploaded
+	 * 
 	 * @param mixed $src Path to the uploaded file or FILES array or like Laravel's `Input::file('image')`
 	 * @param string $dst Directory of where to save the final file
 	 * @return mixed New path or false on error
 	 */
 	static public function organizeUploadedFile($src, $dst_dir) {
+		if (!is_uploaded_file($src)) return false;
+		return static::organizeFile($src, $dst_dir);
+	}
+
+	/**
+	 * Combine a bunch of comon operations on files into a single
+	 * command: Simplify the filename, make it unique, and store it in a nested
+	 * directory
+	 * 
+	 * @param mixed $src Path to the uploaded file or FILES array or like Laravel's `Input::file('image')`
+	 * @param string $dst Directory of where to save the final file
+	 * @return mixed New path or false on error
+	 */
+	static public function organizeFile($src, $dst_dir) {
 		
 		// Make sure the destination ends in a slash
 		$dst_dir = self::addTrailingSlash($dst_dir);
@@ -105,10 +130,7 @@ class File {
 		} else {
 			$filename = basename($src);
 		}
-		
-		// Make sure it's an uploaded file
-		if (!is_uploaded_file($src)) return false;
-		
+				
 		// Make nested sub directories
 		if (!($dst_dir = self::makeSubDirs($dst_dir))) return false;
 		
@@ -116,7 +138,7 @@ class File {
 		$filename = preg_replace('/[^a-z0-9-_.]/', '', strtolower($filename));
 		
 		// Move the file out of it's current directory, into the target destination
-		if (!($path = self::moveUploadedFileUniquely($src, $dst_dir.$filename))) return false;
+		if (!($path = self::moveFileUniquely($src, $dst_dir.$filename))) return false;
 		
 		// Make the file group writeable
 		chmod($path, 0664);
@@ -127,6 +149,7 @@ class File {
 	
 	/**
 	 * Add the trailing slash onto a directory name
+	 * 
 	 * @param string $dir The path to a directory
 	 * @return string The slash added to the name
 	 */
@@ -139,6 +162,7 @@ class File {
 	 * Remove the document root from a path.  Like to get the embed path to an
 	 * image given it's `realpath`.  I prefer to save this in the database rather than
 	 * the absolute path because it makes migrating data between enviornments easier.
+	 * 
 	 * @param string $path The absolute path in the filesystem
 	 * @return string The converted, web friendly relative path
 	 */
@@ -156,6 +180,8 @@ class File {
 
 	/**
 	 * Get the document root.  No trailing slash.
+	 *
+	 * @return string 
 	 */
 	public static function documentRoot() {
 		if (function_exists('public_path')) return public_path();
@@ -166,6 +192,7 @@ class File {
 	/**
 	 * Set the appropriate headers to trigger a file download.  I took this from:
 	 * http://davidwalsh.name/php-force-download
+	 * 
 	 * @param string $path The absolute path to the file
 	 */
 	static public function download($path) {
@@ -202,6 +229,7 @@ class File {
 	
 	/**
 	 * Output an image directly to the browser
+	 * 
 	 * @param $string src The server path to an image
 	 */
 	static public function image($src) {
