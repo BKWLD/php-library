@@ -123,11 +123,13 @@ class String {
 		// Check for the keyword in Laravel's translation system
 		if (class_exists('Lang')) {
 			if (Lang::has('admin.'.$keyword)) return Lang::get('admin.'.$keyword);
-			if (Lang::has('application.'.$keyword)) return Lang::get('app.'.$keyword);
+			if (Lang::has($keyword)) return Lang::get($keyword);
 		}
 		
 		// Otherwise, auto format it
-		return ucfirst(str_replace('_', ' ', $keyword));
+		$keyword = preg_replace('#_at$#', ' date', $keyword);
+		$keyword = str_replace('_', ' ', $keyword);
+		return ucfirst($keyword);
 	}
 	
 	/**
