@@ -122,8 +122,8 @@ class String {
 		
 		// Check for the keyword in Laravel's translation system
 		if (class_exists('Lang')) {
-			if (($title = Lang::get('admin.'.$keyword)) && is_scalar($title)) return $title;
-			if (($title = Lang::get($keyword)) && is_scalar($title)) return $title;
+			if (Lang::has('admin.'.$keyword) && ($title = Lang::get('admin.'.$keyword)) && is_scalar($title)) return $title;
+			if (Lang::has($keyword) && ($title = Lang::get($keyword)) && is_scalar($title)) return $title;
 		}
 		
 		// Otherwise, auto format it
