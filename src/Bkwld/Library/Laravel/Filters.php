@@ -51,8 +51,8 @@ class Filters {
 		// Determine whether redirect should be made
 		if ((Config::get('site.live') && App::environment() == 'production')
 			|| App::isLocal() 
-			|| app('decoy.auth')->check() 
-			|| app('decoy.filters')->isPublic() 
+			|| app('decoy.auth')->check() // They are already logged in
+			|| app('decoy')->handling() // If Decoy is handling, trust to its auth
 			|| Request::is('robots.txt', 'favicon.ico')
 			) return false;
 
