@@ -42,6 +42,9 @@ class Former {
 		$out = array();
 		foreach($src as $key => $val) {
 
+			// If the key is empty like, set to false so Former doesn't give it a value of "0"
+			if (empty($key)) $key = false;
+
 			// Check the first radio automatically
 			if ($options['select_first'] && !count($out)) $out[$val] = array('value' => $key, 'checked' => true);
 
