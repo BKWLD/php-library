@@ -43,8 +43,8 @@ class Html {
 			'og:image',
 		)));
 
-		// Use site name for the og:title
-		if (Config::has('site.name') && empty($config['og:title'])) $config['og:title'] = Config::get('site.name');
+		// Generate default og:title
+		if (Config::has('site.name') && empty($config['og:title'])) $config['og:title'] = strip_tags(self::title());
 
 		// Merge passed meta data into site config
 		$meta = View::yieldContent('meta');
