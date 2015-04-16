@@ -57,9 +57,8 @@ class Filters {
 			) return false;
 
 		// Redirect to the decoy login page
-		return Redirect::action(app('decoy.auth')->loginAction())->with(array(
+		return Redirect::guest(app('decoy.auth')->deniedUrl())->with(array(
 			'login_notice' => 'Until this site is pushed live, you must authenticate to view the previous URL',
-			'login_redirect' => Request::fullUrl(),
 		));
 	}
 
