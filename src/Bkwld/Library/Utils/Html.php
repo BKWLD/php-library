@@ -22,7 +22,7 @@ class Html {
 		$site = Config::get('site.name');
 
 		// Make the title
-		if ($site && $title) $title = $site . ' - ' . $title;
+		if ($site && $title) $title = $title . ' | ' . $site;
 		else if ($site) $title = $site;
 		
 		// Render the tags
