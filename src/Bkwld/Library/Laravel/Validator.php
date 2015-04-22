@@ -6,6 +6,7 @@ use Exception;
 use Input;
 use Redirect;
 use Symfony\Component\HttpFoundation\File\File;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use URL;
 
 class Validator {
@@ -90,28 +91,41 @@ class Validator {
 	}
 
 	/**
+	 * 
+	 * What follows was ripped from Illuminate\Validation\Validator and supports
+	 * the video validator.
+	 * 
+	 */
+
+	/**
 	 * Validate the MIME type of a file upload attribute is in a set of MIME types.
-	 * Note: This is cribbed from Illuminate\Validation\Validator
 	 *
 	 * @param  string  $attribute
-	 * @param  array   $value
+	 * @param  mixed  $value
 	 * @param  array   $parameters
 	 * @return bool
 	 */
-	protected function validateMimes($attribute, $value, $parameters) {
-		if ( ! $value instanceof File) {
+	protected function validateMimes($attribute, $value, $parameters) 
+	{
+		if ( ! $this->isAValidFileInstance($value))
+		{
 			return false;
 		}
 
-		// The Symfony File class should do a decent job of guessing the extension
-		// based on the true MIME type so we'll just loop through the array of
-		// extensions and compare it to the guessed extension of the files.
-		$ext = $value->guessExtension();
-		if ($value->isValid() && $value->getPath() != '') {
-			return in_array($ext, $parameters);
-		} else {
-			return false;
-		}
+		return $value->getPath() != '' && in_array($value->guessExtension(), $parameters);
+	}
+
+	/**
+	 * Check that the given value is a valid file instance.
+	 *
+	 * @param  mixed  $value
+	 * @return bool
+	 */
+	protected function isAValidFileInstance($value) 
+	{
+		if ($value instanceof UploadedFile && ! $value->isValid()) return false;
+
+		return $value instanceof File;
 	}
 	
 }
