@@ -83,7 +83,7 @@ class Validator {
 		return $this->validateMimes($attribute, $value, array(
 
 			// Normal extensions
-			'avi', 'mov', 'mp4', 'ogg', 'vob', 'wbm', 'qt', 
+			'avi', 'mov', 'mp4', 'ogg', 'vob', 'webm', 'qt', 
 
 			// Odd ones because servers often fail at detecting video file types 
 			'bin',
