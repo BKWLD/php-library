@@ -20,6 +20,7 @@ class Html {
 		
 		// Get the site name
 		$site = Config::get('site.name');
+		if (is_callable($site)) $site = call_user_func($site);
 
 		// Make the title
 		if ($site && $title) $title = $title . ' | ' . $site;
