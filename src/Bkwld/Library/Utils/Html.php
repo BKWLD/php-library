@@ -43,6 +43,11 @@ class Html {
 			'og:description',
 			'og:image',
 		)));
+		
+		// Convert any closures in the config to strings
+		$config = array_map(function($value) {
+			return is_callable($value) ? call_user_func($value) : $value;
+		}, $config);
 
 		// Generate default og:title
 		if (Config::has('site.name') && empty($config['og:title'])) $config['og:title'] = strip_tags(self::title());
