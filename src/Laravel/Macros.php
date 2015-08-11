@@ -11,6 +11,7 @@ class Macros {
 	 * "HTML::macro()" since, when running this through unit tests, the 
 	 * facade doesn't exist.  Instead, I expect a reference to current app
 	 * instance to be passed
+	 * 
 	 * @param  \Illuminate\Foundation\Application  $app 
 	 */
 	public static function register($app) {

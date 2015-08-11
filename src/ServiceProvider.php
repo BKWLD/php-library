@@ -2,9 +2,9 @@
 
 // Dependencies
 use Input;
-use Illuminate\Support\ServiceProvider;
+use Illuminate\Support\ServiceProvider as BaseServiceProvider;
 
-class LibraryServiceProvider extends ServiceProvider {
+class ServiceProvider extends BaseServiceProvider {
 
 	/**
 	 * Register the service provider.
@@ -21,7 +21,6 @@ class LibraryServiceProvider extends ServiceProvider {
 	 * @return void
 	 */
 	public function boot() {
-		$this->package('bkwld/library');
 		
 		// Register Laravel helpers on the running app
 		Laravel\Macros::register($this->app);

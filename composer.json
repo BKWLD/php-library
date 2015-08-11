@@ -12,9 +12,8 @@
 		"mockery/mockery": "0.8.*"
 	},
 	"autoload": {
-		"psr-0": {
-			"Bkwld\\Library": "src/"
+		"psr-4": {
+			"Bkwld\\Library\\": "src/"
 		}
-	},
-	"minimum-stability": "dev"
+	}
 }
