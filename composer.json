@@ -9,16 +9,12 @@
 	},
 	"require-dev": {
 		"phpunit/phpunit": "3.7.*",
-		"illuminate/html": "<4.2,>=4.0",
 		"mockery/mockery": "0.8.*"
 	},
 	"autoload": {
 		"psr-0": {
 			"Bkwld\\Library": "src/"
-		},
-		"classmap": [
-			"src/Bkwld/Library/APIs/Twitter/twitteroauth/twitteroauth/twitteroauth.php"
-		]
+		}
 	},
 	"minimum-stability": "dev"
 }
