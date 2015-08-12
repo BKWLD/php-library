@@ -13,6 +13,11 @@ class ServiceProvider extends BaseServiceProvider {
 	 */
 	public function register() {
 		
+		// Register macro service provider
+		$this->app->singleton('Bkwld\Library\Laravel\Macros', function ($app) {
+			return new Laravel\Macros($app['Illuminate\Contracts\Routing\ResponseFactory']);
+		});
+
 	}
 
 	/**
@@ -23,7 +28,7 @@ class ServiceProvider extends BaseServiceProvider {
 	public function boot() {
 		
 		// Register Laravel helpers on the running app
-		Laravel\Macros::register($this->app);
+		$this->app['Bkwld\Library\Laravel\Macros']->register();
 		
 		// // Register validators
 		$validator = $this->app->make('validator');
@@ -50,7 +55,9 @@ class ServiceProvider extends BaseServiceProvider {
 	 * @return array
 	 */
 	public function provides() {
-		return array();
+		return [
+			'Bkwld\Library\Laravel\Macros'
+		];
 	}
 
 }
