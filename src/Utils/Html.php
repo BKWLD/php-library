@@ -2,7 +2,6 @@
 
 // Dependencies
 use BKWLD\Library\APIs\Youtube;
-use Config;
 use Route;
 use Str;
 use View;

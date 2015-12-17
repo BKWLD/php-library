@@ -2,7 +2,6 @@
 
 // Imports
 use App;
-use Config;
 use Response;
 use Redirect;
 use Request;
