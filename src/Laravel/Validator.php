@@ -12,6 +12,17 @@ use URL;
 class Validator {
 	
 	/**
+	 * Validation messages for these validators
+	 *
+	 * @var array
+	 */
+	static public $messages = [
+		"file"        => "The :attribute must be a file.",
+		"unique_with" => "The :attribute has already been taken.",
+		"video"       => "The :attribute must be a video.",
+	];
+
+	/**
 	 * Is like the unique validator but tests multiple columns.  All columns
 	 * must be the same for the validation to fail.
 	 * 
