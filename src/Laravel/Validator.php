@@ -10,7 +10,7 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 use URL;
 
 class Validator {
-	
+
 	/**
 	 * Validation messages for these validators
 	 *
@@ -25,26 +25,26 @@ class Validator {
 	/**
 	 * Is like the unique validator but tests multiple columns.  All columns
 	 * must be the same for the validation to fail.
-	 * 
+	 *
 	 * Note: It looks for the values of the other referenced column from Input::get()
 	 * Note: If useing with Decoy slugs, don't forget that foreign keys unique-where
 	 *   clauses are added for free by Bkwld\Decoy\Input\Slug
-	 * 
+	 *
 	 * Params:
 	 * - Table name
 	 * - The other columns.  Semicolon delimited
 	 * - Optional column name of the attribute
 	 * - Optional id to ignore
 	 * - Optional column for id
-	 * 
+	 *
 	 * Example:
 	 * array(
 	 * 	'slug' => 'unique_with:tags,type;category,slug,10'
 	 * )
-	 * 
+	 *
 	 */
 	public function uniqueWith($attribute, $value, $parameters) {
-		
+
 		// You must specify additional columns
 		if (!isset($parameters[0]) || !isset($parameters[1])) throw new Exception('Table and additional columns must be provided');
 
@@ -69,9 +69,9 @@ class Validator {
 		}
 
 		return $query->count() == 0;
-		
+
 	}
-	
+
 	/**
 	 * Test if a the field has a file or references a valid file path
 	 */
@@ -94,18 +94,18 @@ class Validator {
 		return $this->validateMimes($attribute, $value, array(
 
 			// Normal extensions
-			'avi', 'mov', 'mp4', 'ogg', 'vob', 'webm', 'qt', 
+			'avi', 'mov', 'mp4', 'ogg', 'vob', 'webm', 'qt',
 
-			// Odd ones because servers often fail at detecting video file types 
+			// Odd ones because servers often fail at detecting video file types
 			'bin',
 		));
 	}
 
 	/**
-	 * 
+	 *
 	 * What follows was ripped from Illuminate\Validation\Validator and supports
 	 * the video validator.
-	 * 
+	 *
 	 */
 
 	/**
@@ -116,7 +116,7 @@ class Validator {
 	 * @param  array   $parameters
 	 * @return bool
 	 */
-	protected function validateMimes($attribute, $value, $parameters) 
+	protected function validateMimes($attribute, $value, $parameters)
 	{
 		if ( ! $this->isAValidFileInstance($value))
 		{
@@ -132,11 +132,11 @@ class Validator {
 	 * @param  mixed  $value
 	 * @return bool
 	 */
-	protected function isAValidFileInstance($value) 
+	protected function isAValidFileInstance($value)
 	{
 		if ($value instanceof UploadedFile && ! $value->isValid()) return false;
 
 		return $value instanceof File;
 	}
-	
+
 }
