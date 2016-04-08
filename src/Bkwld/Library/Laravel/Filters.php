@@ -69,11 +69,13 @@ class Filters {
 	static public function conditionalRobots($blacklist = array()) {
 
 		// Add some defaults to the blacklist
-		array_push($blacklist, 'pagoda', '.dev');
+		array_push($blacklist, 'pagoda');
 
 		// Assemble robots content
 		$body = "User-agent: *\nDisallow: ";
-		if (Str::contains(Request::getHost(), $blacklist) || !Config::get('site.live')) $body .= "/";
+		if (Str::contains(Request::getHost(), $blacklist) 
+			|| !Config::get('site.live')
+			|| App::environment() != 'production') $body .= "/";
 
 		// Respond as text
 		$response = Response::make($body, '200');
