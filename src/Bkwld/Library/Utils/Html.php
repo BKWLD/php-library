@@ -25,7 +25,7 @@ class Html {
 
 		// Get page name
 		$title = View::yieldContent('title');
-		
+
 		// Get the site name
 		$site = Config::get('site.name');
 		if (is_callable($site)) $site = call_user_func($site);
@@ -33,7 +33,7 @@ class Html {
 		// Make the title
 		if ($site && $title) $title = $title . ' | ' . $site;
 		else if ($site) $title = $site;
-		
+
 		// Render the tags
 		return '<title>'.$title.'</title>';
 	}
@@ -44,14 +44,14 @@ class Html {
 	static public function meta() {
 		$html = '';
 
-		// Get general site config values that have valid keys for meta tags		
+		// Get general site config values that have valid keys for meta tags
 		$config = array_intersect_key(Config::get('site'), array_flip(array(
-			'og:title', 
-			'description', 
+			'og:title',
+			'description',
 			'og:description',
 			'og:image',
 		)));
-		
+
 		// Convert any closures in the config to strings
 		$config = array_map(function($value) {
 			return is_callable($value) ? call_user_func($value) : $value;
@@ -65,13 +65,13 @@ class Html {
 		if (is_array($meta) && is_array($config)) $meta = array_merge($config, $meta);
 		else if (!is_array($meta) && is_array($config)) $meta = $config;
 		else if (!is_array($meta) && !is_array($config)) return;
-		
-		// Make an explicit og:description if not defined because that makes the 
+
+		// Make an explicit og:description if not defined because that makes the
 		// Facebook linter happy.
 		if (!empty($meta['description']) && empty($meta['og:description'])) {
 			$meta['og:description'] = $meta['description'];
 		}
-		
+
 		// Create all tags
 		$html = '';
 		foreach($meta as $key => $val) {
@@ -80,7 +80,7 @@ class Html {
 			else $html .= "<meta name='$key' content='$val' />";
 		}
 		return $html;
-		
+
 	}
 
 	/**
@@ -96,13 +96,13 @@ class Html {
 
 		// If no class was defined, deduce it
 		if (!$class && $action = Route::currentRouteAction()) {
-			
+
 			// Strip restful prefixes and suffices
 			preg_match('#(\w+)Controller@(?:get|post)?(\w+)#i', $action, $matches);
-			
+
 			// Make an action for missing methods
 			if ($matches[2] == 'missingMethod') $matches[2] = implode(' ', Request::segments());
-			
+
 			//Combine
 			$class = Str::snake($matches[1], '-').' '.Str::snake($matches[2], '-');
 
@@ -122,7 +122,7 @@ class Html {
 	/**
 	 * Render an HTML tag ONLY if the contents are non-empty
 	 * @param $content The text that goes inside the tag
-	 * @param $tag The tag.  This can include attributes like "div class='farts'".  But 
+	 * @param $tag The tag.  This can include attributes like "div class='farts'".  But
 	 * don't include the < or >
 	 */
 	static public function tag($content = null, $tag = 'p') {
@@ -140,37 +140,37 @@ class Html {
 		preg_match('#^\s*(\w+)#', $tag, $matches);
 		return '<'.$tag.'>'.$content.'</'.$matches[1].'>';
 	}
-	
+
 	/**
 	 * Make a vimeo iframe embed from a URL to a video.  Options supports the following:
 	 * id - The id of the iframe (required)
 	 * class - The class of the iframe
 	 */
 	static public function vimeo($url, $width=500, $height=281, $options = null) {
-		
+
 		// Default options
 		if (!$options) $options = array();
 		$options = (object) array_merge(array(
 			'id' => Str::random(8, 'alpha'),
 			'class' => 'vimeo_player',
 		), $options);
-		
+
 		// The video id is the last digits of the URL
 		if (!preg_match('/(\d+)$/', $url, $matches)) return '';
 		$id = $matches[0];
-		
+
 		// Return the assembled url
 		return '<iframe id="'.$options->id.'" src="//player.vimeo.com/video/'.$id.'?portrait=0&badge=0&title=0&byline=0&color=d76b00&api=1&player_id='.$options->id.'" width="'.$width.'" height="'.$height.'" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe>';
-		
+
 	}
-	
+
 	/**
 	 * Make a youtube iframe embed from a URL to a video.  Options supports the following:
 	 * id - The id of the iframe
 	 * class - The class of the iframe
 	 */
 	static public function youtube($url, $width=500, $height=281, $options = null) {
-		
+
 		// Default options
 		if (!$options) $options = array();
 		$options = (object) array_merge(array(
@@ -180,7 +180,7 @@ class Html {
 			'autohide' => 1,
 			'rel' => 0,
 		), $options);
-		
+
 		// Build params
 		$params = http_build_query(array(
 			'showinfo' => $options->showinfo,
@@ -188,10 +188,10 @@ class Html {
 			'playerapiid' => $options->id,
 			'rel' => $options->rel,
 		));
-		
+
 		// Parse the ID from the youtube url
 		if (!($id = Youtube\URL::id($url))) return '';
-		
+
 		// Return the assembled url
 		return '<iframe id="'.$options->id.'" class="'.$options->class.'" width="'.$width.'" height="'.$height.'" src="//www.youtube.com/embed/'.$id.'?'.$params.'" frameborder="0" allowfullscreen></iframe>';
 	}
@@ -202,7 +202,7 @@ class Html {
 	static public function gravatar($email) {
 		return '//www.gravatar.com/avatar/'.md5(strtolower(trim($email)));
 	}
-	
+
 	/**
 	 * Check for a file in the dist directory and use it.  It expects a mapping json file
 	 * to be at public/dist/mapping.json
@@ -213,14 +213,14 @@ class Html {
 
 		// We've already looked for the mapping file and it didn't exist
 		if (self::$grunt_mapping === false) return $path;
-		
+
 		// Check if we've already loaded the mapping file
 		$key = substr($path, 1); // The mapping doesn't have leading slashes
 		if (!empty(self::$grunt_mapping)) {
 			if (isset(self::$grunt_mapping->$key)) return '/'.self::$grunt_mapping->$key;
 			return $path;
 		}
-		
+
 		// Load the mapping.json
 		$absolute = File::documentRoot().'/dist/mapping.json';
 		if (!file_exists($absolute)) return $path;

@@ -5,13 +5,13 @@
  * actual assignment as HTML Macros, to make them more testable
  */
 class Macros {
-	
+
 	/**
 	 * Assign all macros to the HtmlBuilder.  Not using the static method
-	 * "HTML::macro()" since, when running this through unit tests, the 
+	 * "HTML::macro()" since, when running this through unit tests, the
 	 * facade doesn't exist.  Instead, I expect a reference to current app
 	 * instance to be passed
-	 * @param  \Illuminate\Foundation\Application  $app 
+	 * @param  \Illuminate\Foundation\Application  $app
 	 */
 	public static function register($app) {
 		$html = $app->make('html');
@@ -26,5 +26,5 @@ class Macros {
 		$html->macro('webpackAssetTag', 'Bkwld\Library\Utils\Html::webpackAssetTag');
 		$html->macro('assetTag', 'Bkwld\Library\Utils\Html::assetTag');
 	}
-	
+
 }
