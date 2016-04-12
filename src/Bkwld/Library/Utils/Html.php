@@ -11,6 +11,14 @@ use View;
 class Html {
 
 	/**
+	 * Contains the parsed webpack manifest.json
+	 *
+	 * @var stdObject
+	 */
+	static protected $webpack_manifest;
+
+
+	/**
 	 * Format title based on section content
 	 */
 	static public function title() {
@@ -226,5 +234,56 @@ class Html {
 
 	}
 
-	
+	/**
+	 * ---------------------------------------------------------------------------
+	 * Asset tags
+	 */
+
+	/**
+	 * Generate either a script (js) or link (css) tag using the manifest.json
+	 * file output by json.
+	 *
+	 * @param  string $name The webpack entry point name for the asset with it's
+	 *                      suffix.  For instance, if your entry config has
+	 *                      `app: 'bott.coffee'`, you would pass this function
+	 *                      'app.js'
+	 * @return string|void  Either a script or link HTML string.  Or nothing if
+	 *                      the the $name coudln't be found.
+	 *
+	 * @throws Bkwld\Camo\Exceptions\ManifestNotFound;
+	 */
+	static public function webpackAssetTag($name) {
+
+		// Load the manifest
+		if (!static::$webpack_manifest) {
+			$manifest_path = public_path('dist/manifest.json');
+			if (!file_exists($manifest_path)) throw new ManifestNotFound;
+			static::$webpack_manifest = json_decode(file_get_contents($manifest_path));
+		}
+
+		// If the manifest contains a reference, generate a tag for it.  Otherwise
+		// just use an empty string
+		list($key, $type) = explode('.', $name);
+		$tag = empty(static::$webpack_manifest->$key->$type) ? ''
+			: static::assetTag($type, static::$webpack_manifest->$key->$type);
+
+		// Cache and return the tag
+		return $tag;
+	}
+
+	/**
+	 * Generate a script or link tag for the provided URL
+	 *
+	 * @param  string $type "js" or "css"
+	 * @param  string $url  URL to an asset
+	 * @return string       An HTML tag linking to the URL
+	 */
+	static public function assetTag($type, $url) {
+		switch($type) {
+			case 'js': return "<script src='$url' charset='utf-8'></script>";
+			case 'css': return "<link href='$url' rel='stylesheet'>";
+		}
+	}
+
+
 }

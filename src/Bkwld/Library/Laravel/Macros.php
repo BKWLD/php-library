@@ -23,6 +23,8 @@ class Macros {
 		$html->macro('youtube', 'Bkwld\Library\Utils\Html::youtube');
 		$html->macro('gravatar', 'Bkwld\Library\Utils\Html::gravatar');
 		$html->macro('grunt', 'Bkwld\Library\Utils\Html::grunt');
+		$html->macro('webpackAssetTag', 'Bkwld\Library\Utils\Html::webpackAssetTag');
+		$html->macro('assetTag', 'Bkwld\Library\Utils\Html::assetTag');
 	}
 	
 }
