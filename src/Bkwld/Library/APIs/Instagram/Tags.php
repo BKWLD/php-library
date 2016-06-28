@@ -24,8 +24,8 @@ class Tags {
 		// Form the starting URL
 		$url = 'https://api.instagram.com/v1/tags/'
 			.urlencode($tag)
-			.'/media/recent?client_id='
-			.Config::get('instagram.client_id')
+			.'/media/recent?access_token='
+			.Config::get('instagram.access_token')
 			.'&min_tag_id='
 			.$min_tag_id;
 		
