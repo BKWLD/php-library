@@ -5,13 +5,13 @@ use Lang;
 
 // Utilities for dealing with strings
 class String {
-	
+
 	/**
 	 * Get the bytes from a PHP human-size style string
 	 * http://stackoverflow.com/a/4177462/59160
 	 *
-	 * @param  string $val 
-	 * @return int 
+	 * @param  string $val
+	 * @return int
 	 */
 	static public function bytesFromHuman($val) {
 		$val = trim($val);
@@ -27,9 +27,9 @@ class String {
 	/**
 	 * Convert a size in bytes to human readable
 	 * http://php.net/manual/en/function.filesize.php#106569
-	 * 
-	 * @param  int  $bytes    
-	 * @param  int $decimals 
+	 *
+	 * @param  int  $bytes
+	 * @param  int $decimals
 	 * @return string
 	 */
 	static public function humanSize($bytes, $decimals = 2) {
@@ -53,7 +53,7 @@ class String {
 	 * Adapted from http://www.zachstronaut.com/posts/2009/01/20/php-relative-date-time-string.html
 	 */
 	static public function timeElapsed($ptime, $options = null) {
-		
+
 		// Default options
 		if (!$options) $options = array();
 		$options = array_merge(array(
@@ -69,10 +69,10 @@ class String {
 				'year',
 			)
 		), $options);
-		
+
 		$etime = time() - $ptime;
 		if ($etime < 1) { return $options['labels'][0]; }
-		
+
 		$a = array( 12 * 30 * 24 * 60 * 60  =>  $options['labels'][6],
 		            30 * 24 * 60 * 60       =>  $options['labels'][5],
 		            24 * 60 * 60            =>  $options['labels'][4],
@@ -80,7 +80,7 @@ class String {
 		            60                      =>  $options['labels'][2],
 		            1                       =>  $options['labels'][1],
 		            );
-		
+
 		foreach ($a as $secs => $str) {
 			$d = $etime / $secs;
 			if ($d >= 1) {
@@ -97,19 +97,19 @@ class String {
 	 * @return string i.e. "Some multi key"
 	 */
 	static public function titleFromKey($keyword) {
-		
+
 		// Check for the keyword in Laravel's translation system
 		if (class_exists('Lang')) {
 			if (Lang::has('admin.'.$keyword) && ($title = Lang::get('admin.'.$keyword)) && is_scalar($title)) return $title;
 			if (Lang::has($keyword) && ($title = Lang::get($keyword)) && is_scalar($title)) return $title;
 		}
-		
+
 		// Otherwise, auto format it
 		$keyword = preg_replace('#_at$#', ' date', $keyword);
 		$keyword = str_replace('_', ' ', $keyword);
 		return ucfirst($keyword);
 	}
-	
+
 	/**
 	 * Remove everything up the substring from a string.
 	 * Ex: trimUntil('/var/www/site/public/uploads/01/01/file.jpg', '/uploads');

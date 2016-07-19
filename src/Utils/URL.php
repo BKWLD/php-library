@@ -28,7 +28,7 @@ class URL {
 
 	/**
 	 * Remove a query parameter from a URL
-	 * @param string $url 
+	 * @param string $url
 	 * @param string $key
 	 * @return string The URL without the query parameter
 	 */
@@ -58,10 +58,10 @@ class URL {
 		if (!empty($parts['fragment'])) $url .= '#'.$parts['fragment'];
 		return $url;
 	}
-	
+
 	/**
 	 * Stripping the current domain (and protocol) from a URL
-	 * 
+	 *
 	 * @param string $url
 	 * @param string $host
 	 * @return string

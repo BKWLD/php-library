@@ -11,7 +11,7 @@ class Collection {
 	static public function randomValue($ar) {
 		return $ar[array_rand($ar)];
 	}
-	
+
 	/**
 	 * Replace all the empty strings in an array with NULL.  An empty string
 	 * excludes numeric 0.
@@ -22,13 +22,13 @@ class Collection {
 		}
 		return $ar;
 	}
-	
+
 	/**
-	 * Check if the key is either in an array (it is the value of 
+	 * Check if the key is either in an array (it is the value of
 	 * a numeric key) or if it itself a key
 	 */
 	static public function keyOrValueExists($key, $ar) {
 		return array_key_exists($key, $ar) || in_array($key, $ar);
 	}
-	
+
 }

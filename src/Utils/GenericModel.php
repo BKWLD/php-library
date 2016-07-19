@@ -4,20 +4,20 @@
  * Has magic methods for adding properties to a class magically, like a Laravel model
  */
 abstract class GenericModel {
-	
+
 	/**
 	 * This is where the magic attribtues are stored
 	 * @var array
 	 */
 	private $attributes = array();
-	
+
 	/**
 	 * Set initial attributes on load
 	 */
 	public function __construct(array $attributes = array()) {
 		$this->attributes = $attributes;
 	}
-	
+
 	/**
 	 * Convert the model instance to JSON.
 	 *
@@ -36,7 +36,7 @@ abstract class GenericModel {
 	public function toArray() {
 		return $this->attributes;
 	}
-	
+
 
 	/**
 	 * Dynamically retrieve attributes on the model.
@@ -60,7 +60,7 @@ abstract class GenericModel {
 	public function __set($key, $value) {
 		$this->attributes[$key] = $value;
 	}
-	
+
 	/**
 	 * Determine if an attribute exists on the model.
 	 *
@@ -80,7 +80,7 @@ abstract class GenericModel {
 	public function __unset($key) {
 		unset($this->attributes[$key]);
 	}
-	
+
 	/**
 	 * Convert the model to its string representation.
 	 *
@@ -89,5 +89,5 @@ abstract class GenericModel {
 	public function __toString() {
 		return $this->toJson();
 	}
-	
+
 }

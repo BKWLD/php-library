@@ -12,15 +12,15 @@ class Former {
 	 * Take a key => value array like the type that is often used to store hard
 	 * coded enum type data and turn it into the sort of array needed by
 	 * Former's inline radio buttons.  Takes:
-	 * 
+	 *
 	 * array(
-	 *   'draft' => 'Draft', 
-	 *   'pending' => 'Pending', 
+	 *   'draft' => 'Draft',
+	 *   'pending' => 'Pending',
 	 *   'published' => 'Published',
 	 * )
-	 * 
+	 *
 	 * And makes:
-	 * 
+	 *
 	 * array(
 	 *   'Draft' => array('value' => 'draft', 'checked' => true),
 	 *   'Pending' => array('value' => 'pending'),
@@ -58,7 +58,7 @@ class Former {
 	 * Take a key value array like described for radioArray and make a list of
 	 * checkboxes that are named like an array.  In addition, it auto checks
 	 * boxes on the edit view by looking to the former value
-	 * 
+	 *
 	 * Thus, if used for the radio example might get an array like:
 	 *
 	 * array(
@@ -75,7 +75,7 @@ class Former {
 	 * 		$this->status = implode(',', $this->status);
 	 * 	}
 	 * }
-	 * 
+	 *
 	 * NOTE: You will need to set `push(false)` on the checkbox to stop hidden
 	 * fields from confusing the repopulation of the form on error.  Otherwise,
 	 * something like this happens: http://cl.ly/image/3l1D32021q2I.  In addition
