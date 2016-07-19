@@ -2,8 +2,6 @@
 
 // Dependencies
 use Lang;
-require_once('vendor/kwi-urllinker/UrlLinker.class.php');
-use Kwi\UrlLinker;
 
 // Utilities for dealing with strings
 class String {
@@ -38,26 +36,6 @@ class String {
 		$sz = 'BKMGTP';
 		$factor = floor((strlen($bytes) - 1) / 3);
 		return sprintf("%.{$decimals}f", $bytes / pow(1024, $factor)) . @$sz[$factor];
-	}
-	
-	/**
-	 * Add HTML links to URLs in a string.  This loads a vendor PHP
-	 * file into this function because it registers global functions
-	 * that I don't want in the global space
-	 */
-	static public function linkify($text, $options = array()) {
-		
-		// Default options
-		$defaults = array(
-			'target' => '_blank',
-		);
-		
-		// Apply user options
-		if (is_array($options)) $options = array_merge($defaults, $options);
-		
-		// Generate the link
-		$url_linker = new UrlLinker;
-		return $url_linker->parse($text, $options);
 	}
 
 	/**
