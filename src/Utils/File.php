@@ -10,9 +10,9 @@ class File {
 	 */
 	static public function maxUpload() {
 		return min(
-			String::bytesFromHuman(ini_get('post_max_size')),
-			String::bytesFromHuman(ini_get('upload_max_filesize')),
-			String::bytesFromHuman(ini_get('memory_limit'))
+			Text::bytesFromHuman(ini_get('post_max_size')),
+			Text::bytesFromHuman(ini_get('upload_max_filesize')),
+			Text::bytesFromHuman(ini_get('memory_limit'))
 		);
 	}
 

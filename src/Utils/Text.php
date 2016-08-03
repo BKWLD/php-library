@@ -4,7 +4,7 @@
 use Lang;
 
 // Utilities for dealing with strings
-class String {
+class Text {
 
 	/**
 	 * Get the bytes from a PHP human-size style string
