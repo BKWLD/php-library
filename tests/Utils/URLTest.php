@@ -1,8 +1,8 @@
-<?php
+<?php namespace Tests\Utils;
 
 use Bkwld\Library\Utils\URL;
 
-class TestUtilsURL extends PHPUnit_Framework_TestCase {
+class URLTest extends \PHPUnit_Framework_TestCase {
 
 	public function testUnsetParam() {
 		$this->assertEquals('http://domain.com/whatever', URL::unsetParam('http://domain.com/whatever?foo=bar', 'foo'));

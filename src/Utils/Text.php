@@ -2,26 +2,45 @@
 
 // Dependencies
 use Lang;
+use InvalidArgumentException;
 
 // Utilities for dealing with strings
 class Text {
 
 	/**
 	 * Get the bytes from a PHP human-size style string
-	 * http://stackoverflow.com/a/4177462/59160
+	 * https://regex101.com/r/5AqXle/2
 	 *
 	 * @param  string $val
 	 * @return int
+	 * @throws InvalidArgumentException
 	 */
 	static public function bytesFromHuman($val) {
-		$val = trim($val);
-		$last = strtolower($val[strlen($val)-1]);
-		switch($last) {
+
+		// Seperate number from unit
+		if (!preg_match('#^([\d\.]+)(.*)$#', $val, $matches)) {
+			throw new InvalidArgumentException('Pattern not matched');
+		}
+
+		// Get the parts
+		$val = $matches[1];
+		$unit = strtolower(trim($matches[2]));
+
+		// Calculate the bytes
+		switch($unit) {
+			case 'gigabytes':
+			case 'gb':
 			case 'g': $val *= 1024;
+			case 'megabytes':
+			case 'mb':
 			case 'm': $val *= 1024;
+			case 'kilobytes':
+			case 'kb':
 			case 'k': $val *= 1024;
 		}
-		return $val;
+
+		// Return the bytes
+		return round($val);
 	}
 
 	/**
