@@ -14,7 +14,7 @@ class Text {
 	 * @return int
 	 */
 	static public function bytesFromHuman($val) {
-		$val = trim($val);
+		$val = intval(trim($val));
 		$last = strtolower($val[strlen($val)-1]);
 		switch($last) {
 			case 'g': $val *= 1024;
