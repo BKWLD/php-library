@@ -1,4 +1,4 @@
-# BKWLD PHP Library
+# Bukwild PHP Library [![Build Status](https://travis-ci.org/BKWLD/php-library.svg)](https://travis-ci.org/BKWLD/php-library)
 
 This is a bundle designed to work with Laravel but it tries to stay independent where possible.
 
