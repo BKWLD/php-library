@@ -23,9 +23,6 @@ class TextTest extends \PHPUnit_Framework_TestCase {
 		// Invalid
 		$this->expectException(InvalidArgumentException::class);
 		Text::bytesFromHuman('No number');
-		$this->expectException(InvalidArgumentException::class);
-		Text::bytesFromHuman('10pants');
-
 	}
 
 }
