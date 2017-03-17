@@ -14,4 +14,4 @@ This is a bundle designed to work with Laravel but it tries to stay independent 
 
 1. Run `composer require bkwld/library`
 
-2. Add as a provider in your config/app.php's provider list: `'Bkwld\Library\erviceProvider',`
+2. Add as a provider in your config/app.php's provider list: `'Bkwld\Library\ServiceProvider',`
