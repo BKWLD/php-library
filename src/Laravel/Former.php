@@ -62,7 +62,7 @@ class Former {
 	 * Thus, if used for the radio example might get an array like:
 	 *
 	 * array(
-	 * 	 'Draft' => array('value' => 'draft', name => 'status[]', checked => false),
+	 *   'Draft' => array('value' => 'draft', name => 'status[]', checked => false),
 	 *   'Pending' => array('value' => 'pending', name='status[]', checked => true),
 	 *   'Published' => array('value' => 'published', name='status[]', checked => false),
 	 * )
