@@ -86,7 +86,8 @@ class Former {
 	 */
 	static public function checkboxArray($name, $src) {
 		$out = array();
-		$boxes = explode(',', App::make('former')->getValue($name));
+		$boxes = App::make('former')->getValue($name);
+		if (!is_array($boxes)) $boxes = explode(',', $boxes);
 		foreach($src as $key => $val) {
 			$out[$val] = array(
 				'value' => $key,
