@@ -18,6 +18,7 @@ class Text {
 	static public function bytesFromHuman($val) {
 		$val = trim($val);
 		$last = strtolower($val[strlen($val)-1]);
+		$val = filter_var($val, FILTER_SANITIZE_NUMBER_INT);
 		switch($last) {
 			case 'g': $val *= 1024;
 			case 'm': $val *= 1024;
